@@ -1,0 +1,135 @@
+<VirtualHost *:60803>
+
+    # ----------------------------------------------
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel warn
+
+    # ----------------------------------------------
+    ServerAdmin root@tenbit.net
+    ServerName  exchange.tenbit.loc
+    ServerAlias *.tenbit.loc
+    DirectoryIndex .INDEX.php
+
+	DocumentRoot /m-sys/prog/web/sites/exchange.tenbit.net/www/
+
+    # ----------------------------------------------
+    <Directory /m-sys/prog/web/sites/exchange.tenbit.net/www/>
+	        Options Indexes FollowSymLinks MultiViews
+	        AllowOverride All
+	        Order allow,deny
+	        allow from all
+	</Directory>
+
+	<Directory />
+	        Options FollowSymLinks
+	        AllowOverride All
+	</Directory>
+
+</VirtualHost>
+
+# ==========================================================================
+<VirtualHost *:60804>
+
+    # -----------------------------------------------------------------
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel warn
+
+    # -----------------------------------------------------------------
+    ServerAdmin root@tenbit.net
+    ServerName  nano-admin.loc
+    ServerAlias *.nano-admin.loc
+    DirectoryIndex .INDEX.php
+
+    # -----------------------------------------------------------------
+	DocumentRoot /m-sys/prog-proj/nano-admin/
+
+	<Directory /m-sys/prog-proj/nano-admin>
+	        Options Indexes FollowSymLinks MultiViews
+	        AllowOverride All
+	        Order allow,deny
+	        allow from all
+	</Directory>
+
+	<Directory />
+	        Options FollowSymLinks
+	        AllowOverride All
+	</Directory>
+
+    # -----------------------------------------------------------------
+
+</VirtualHost>
+
+# ==========================================================================
+<VirtualHost *:80>
+
+    # -----------------------------------------------------------------
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel warn
+
+    # -----------------------------------------------------------------
+    ServerAdmin root@tenbit.net
+    ServerName  zergo.loc
+    ServerAlias *.zergo.loc
+    DirectoryIndex .INDEX.php
+
+    # -----------------------------------------------------------------
+	DocumentRoot /m-sys/prog/web/work/zergo/zergo.loc/www/
+
+	<Directory /m-sys/prog/web/work/zergo/zergo.loc/www/>
+	        Options Indexes FollowSymLinks MultiViews
+	        AllowOverride All
+	        Order allow,deny
+	        allow from all
+	</Directory>
+
+	<Directory />
+	        Options FollowSymLinks
+	        AllowOverride All
+	</Directory>
+
+    # -----------------------------------------------------------------
+
+</VirtualHost>
+
+<VirtualHost *:8080>
+
+    # -----------------------------------------------------------------
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel warn
+
+    # -----------------------------------------------------------------
+    ServerAdmin root@tenbit.net
+    ServerName  zergo.loc
+    ServerAlias *.zergo.loc
+    DirectoryIndex .INDEX.php
+
+    # -----------------------------------------------------------------
+	DocumentRoot /m-sys/prog/web/work/zergo/zergo.loc/www/
+
+	<Directory /m-sys/prog/web/work/zergo/zergo.loc/www/>
+	        Options Indexes FollowSymLinks MultiViews
+	        AllowOverride All
+	        Order allow,deny
+	        allow from all
+	</Directory>
+
+	<Directory />
+	        Options FollowSymLinks
+	        AllowOverride All
+	</Directory>
+
+    # -----------------------------------------------------------------
+
+</VirtualHost>

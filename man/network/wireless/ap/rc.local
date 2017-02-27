@@ -1,0 +1,8 @@
+cat <<XXX > /etc/rc.local
+# =======================================================================
+# rm /etc/udev/rules.d/70-persistent-net.rules 2> /dev/null
+
+# sleep=10
+# service hostapd restart
+# =======================================================================
+XXX

@@ -1,0 +1,15 @@
+ 4
+down vote
+    
+
+I found a convenient solution that solves the problem. You create a group that is never allowed to use the internet and start the program as a member of this group.
+
+    Create a group no-internet. Do not join this group.
+    Add a rule iptables -A OUTPUT -m owner --gid-owner no-internet -j DROP to ip tables that prevents all processes belonging to the group no-internet from using the network.
+    Execute sudo -g no-internet YOURCOMMAND instead of YOURCOMMAND.
+
+You can easily write a wrapper script that uses sudo for you. You can get rid of the password prompt by adding
+
+%sudo     ALL=(:no-internet)      NOPASSWD: ALL
+
+or something similar to your /etc/sudoers.

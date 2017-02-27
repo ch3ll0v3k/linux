@@ -1,0 +1,159 @@
+# http://manpages.ubuntu.com/manpages/precise/man5/interfaces.5.html
+
+# -------------------------------------------------------------------
+auto lo
+iface lo inet loopback
+
+# -------------------------------------------------------------------
+allow-hotplug wlan0
+auto wlan0
+iface wlan0 inet (static | dhcp | manual | bootp | tunnel | ppp | wvdial | ipv4ll ) 
+
+
+    # ************************************************************************
+    # wvdial
+
+        provider name
+            Use name as the provider (from /etc/ppp/peers). 
+
+    # ************************************************************************
+    # IF WPA2
+    wireless-essid ESSID
+    wpa-psk SFhqttr37reryqrosokeZR4TZ3945376224zrsh57
+
+    # ************************************************************************
+    # IF NON WPA2
+    essid ESSID
+    wireless-key KEY
+    wireless-mode Managed
+
+    # ************************************************************************
+    # NET-CONF dhcp
+
+        This method may be used to obtain an address via DHCP with any  of  the
+        tools:  dhclient, pump, udhcpc, dhcpcd. (They have been listed in their
+        order of precedence.) If you have a complicated DHCP setup  you  should
+        note  that  some of these clients use their own configuration files and
+        do not obtain their configuration information via ifup.
+
+        hostname hostname
+            Hostname to be requested (pump, dhcpcd, udhcpc)
+
+        leasehours leasehours
+            Preferred lease time in hours (pump)
+
+        leasetime leasetime
+            Preferred lease time in seconds (dhcpcd)
+
+        vendor vendor
+            Vendor class identifier (dhcpcd)
+
+        client client
+            Client identifier (dhcpcd, udhcpc)
+
+        hwaddress ether 01:02:03:04:05:06
+            Hardware Address. class is one of 
+            (ether, ax25, ARCnet, netrom). address is dependent on this choice. 
+
+
+    # ************************************************************************
+    # NET-CONF static
+
+        This  method  may be used to define ethernet interfaces with statically allocated IPv4 addresses.
+
+        address address
+            Address (dotted quad/netmask) required
+
+        netmask mask
+            Netmask (dotted quad or CIDR)
+
+        broadcast broadcast_address
+            Broadcast address (dotted quad, + or -) Default value: +
+
+        metric metric
+            Routing metric for default gateway (integer)
+
+        gateway address
+            Default gateway (dotted quad)
+
+        pointopoint address
+            Address of  other  end  point  (dotted  quad).  Note  the spelling of "point-to".
+
+        hwaddress ether 01:02:03:04:05:06
+            Hardware Address. class is one of 
+            (ether, ax25, ARCnet, netrom). address is dependent on this choice. 
+
+        mtu size
+            MTU size
+
+        scope  
+            Address  validity  scope.  Possible values: global, link, host
+
+        address 192.168.0.21
+        netmask 255.255.255.0
+        network 192.168.0.0
+        broadcast 192.168.0.255
+        gateway 192.168.0.2
+        hwaddress ether 01:02:03:04:05:06
+
+        dns-nameservers 8.8.8.8, 8.8.4.4
+        dns-search telenet.be
+
+    # ************************************************************************
+    # EXTRA-OPTIONS
+    wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+
+    # ************************************************************************
+    # MAIN-OPTIONS
+
+    pre-up command
+        Run command before bringing the interface up.  If  this  command
+        fails then ifup aborts, refraining from marking the interface as
+        configured, prints an error message, and exits  with  status  0.
+        This behavior may change in the future.
+
+    up command
+
+    post-up command
+        Run  command  after  bringing the interface up.  If this command
+        fails then ifup aborts, refraining from marking the interface as
+        configured  (even  though it has really been configured), prints
+        an error message, and exits with status 0.   This  behavior  may
+        change in the future.
+
+    down command
+
+    pre-down command
+        Run  command  before taking the interface down.  If this command
+        fails then ifdown aborts, marks the  interface  as  deconfigured
+        (even  though  it  has  not really been deconfigured), and exits
+        with status 0.  This behavior may change in the future.
+
+    post-down command
+        Run command after taking the interface down.   If  this  command
+        fails  then  ifdown aborts, marks the interface as deconfigured,
+        and exits with status  0.   This  behavior  may  change  in  the
+        future.
+
+    # ************************************************************************
+    auto bond0
+    iface bond0 inet manual
+        down ip link set $IFACE down
+        post-down rmmod bonding
+        pre-up modprobe bonding mode=4 miimon=200
+        up ip link set $IFACE up mtu 9000
+        up udevadm trigger
+
+    allow-hotplug eth0
+    iface eth0 inet manual
+        up ifenslave bond0 $IFACE
+        down ifenslave -d bond0 $IFACE 2> /dev/null
+
+    allow-hotplug eth1
+    iface eth1 inet manual
+        up ifenslave bond0 $IFACE
+        down ifenslave -d bond0 $IFACE 2> /dev/null
+
+    # ************************************************************************
+    # ************************************************************************
+    # ************************************************************************

@@ -1,0 +1,36 @@
+toor@tr:~$ ldd /usr/lib/i386-linux-gnu/dri/i965_dri.so | grep drm_intel
+    libdrm_intel.so.1 => /usr/lib/i386-linux-gnu/libdrm_intel.so.1 (0xb729e000)
+
+toor@tr:~$ locate i965
+/usr/lib/i386-linux-gnu/dri/i965_dri.so
+
+00:02.0 VGA compatible controller [0300]: 
+Intel Corporation 82852/855GM Integrated Graphics Device [8086:3582] 
+(rev 02) Subsystem: IBM Device [1014:0557] Kernel driver in use: i915
+
+libgl1-mesa-dri libgl1-mesa-glx
+
+----------------------------------------------------
+toor@tr:/m-sys/linux/drm_intel$ LIBGL_DEBUG=verbose glxinfo|grep render
+libGL: OpenDriver: trying /usr/lib/i386-linux-gnu/dri/tls/swrast_dri.so
+libGL: OpenDriver: trying /usr/lib/i386-linux-gnu/dri/swrast_dri.so
+libGL: Can't open configuration file /home/toor/.drirc: No such file or directory.
+libGL: Can't open configuration file /home/toor/.drirc: No such file or directory.
+direct rendering: Yes
+    GLX_MESA_multithread_makecurrent, GLX_MESA_query_renderer, 
+    GLX_MESA_multithread_makecurrent, GLX_MESA_query_renderer, 
+OpenGL renderer string: Gallium 0.4 on llvmpipe (LLVM 3.5, 128 bits)
+    GL_ARB_conditional_render_inverted, GL_ARB_conservative_depth, 
+    GL_NV_conditional_render, GL_NV_depth_clamp, GL_NV_packed_depth_stencil, 
+    GL_ARB_conditional_render_inverted, GL_ARB_conservative_depth, 
+    GL_MESA_ycbcr_texture, GL_NV_blend_square, GL_NV_conditional_render, 
+    GL_OES_fbo_render_mipmap, GL_OES_get_program_binary, GL_OES_mapbuffer, 
+
+----------------------------------------------------
+cat > /usr/share/X11/xorg.conf.d/20-intel.conf << "EOF"
+Section "Device"
+        Identifier "My device"
+        Driver "intel"
+EndSection
+EOF
+----------------------------------------------------

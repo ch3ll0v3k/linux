@@ -1,0 +1,79 @@
+cat <<XXX > /etc/network/interfaces
+# =======================================================================
+auto lo
+iface lo inet loopback
+
+# -----------------------------------------------------
+# auto eth0
+# iface eth0 inet dhcp
+# -----------------------------------------------------
+auto eth0 
+iface eth0 inet static
+    address 192.168.0.200
+    gateway 192.168.0.1
+    netmask 255.255.255.0
+    network 192.168.0.0
+    broadcast 192.168.0.255
+# -----------------------------------------------------
+auto wlan0 
+iface wlan0 inet static
+    address 192.168.0.201
+    gateway 192.168.0.1
+    netmask 255.255.255.0
+    network 192.168.0.0
+    broadcast 192.168.0.255
+# -----------------------------------------------------
+auto br0
+iface br0 inet static
+    bridge_ports eth0 wlan0
+    address 192.168.0.202
+    gateway 192.168.0.1
+    netmask 255.255.255.0
+    network 192.168.0.0
+    broadcast 192.168.0.255
+# =======================================================================
+
+XXX
+
+
+
+
+
+
+
+
+cat <<XXX > /etc/network/interfaces
+# =======================================================================
+auto lo
+iface lo inet loopback
+
+# -----------------------------------------------------
+# auto eth0
+# iface eth0 inet dhcp
+# -----------------------------------------------------
+auto eth0 
+iface eth0 inet static
+   address 192.168.0.201
+   gateway 192.168.0.1
+   netmask 255.255.255.0
+   network 192.168.0.0
+   broadcast 192.168.0.255
+# -----------------------------------------------------
+auto br0
+iface br0 inet static
+   address 192.168.0.253
+   gateway 192.168.0.1
+   netmask 255.255.255.0
+   network 192.168.0.0
+   broadcast 192.168.0.255
+# -----------------------------------------------------
+auto wlan0 
+iface wlan0 inet static
+   address 192.168.0.202
+   gateway 192.168.0.1
+   netmask 255.255.255.0
+   network 192.168.0.0
+   broadcast 192.168.0.255
+# =======================================================================
+
+XXX

@@ -1,0 +1,84 @@
+# -----------------------------------------------------------------------
+# Display all soundcards and digital audio devices
+arecord -l
+
+# To cat all sound devices
+
+aplay -l 
+
+
+cat /proc/asound/cards
+
+# -----
+0  [I82801DBICH4   ]: ICH4 - Intel 82801DB-ICH4
+                      Intel 82801DB-ICH4 with AD1981B at irq 11
+1  [Modem          ]: ICH-MODEM - Intel 82801DB-ICH4 Modem
+                      Intel 82801DB-ICH4 Modem at irq 11
+2  [Device         ]: USB-Audio - USB PnP Sound Device
+                      C-Media Electronics Inc. USB PnP Sound Device at usb-0000:00:1d.1-1, full speed
+29 [ThinkPadEC     ]: ThinkPad EC - ThinkPad Console Audio Control
+                      ThinkPad Console Audio Control at EC reg 0x30, fw 1VHT28WW-1.04
+# -----
+
+
+lspci | grep -i audio
+
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+speaker-test -D hw:0,0
+
+you can use 
+aplay -D front:CARD=CK804,DEV=0 somefile.wav
+
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+
+hw:1,0. These are specified in your ".asoundrc"
+
+
+# -----------------------------------------------------------------------
+# extra info
+
+cat /etc/modprobe.d/alsa-base.conf
+
+# -----------------------------------------------------------------------
+# cat /usr/share/doc/acpi-support/examples/acpi/suspend.d/85-alsa-state.sh
+
+# -----
+
+#!/bin/sh
+# Save the ALSA state
+if [ -x /etc/init.d/alsa-utils ]; then
+        if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+                invoke-rc.d alsa-utils stop
+        else
+        /etc/init.d/alsa-utils stop
+        fi
+fi
+# -----
+
+# -----------------------------------------------------------------------
+
+# -----------------------------------------------------------------------
+ cat /usr/share/alsa/cards/USB-Audio.conf 
+
+#
+#  USB-Audio.conf - configuration for USB Audio devices
+#
+#
+#  DO NO EDIT; this is an internal ALSA file.
+#  If you want to add your own definitions, put them into /etc/asound.conf or
+#  ~/.asoundrc, with "cards." before the "USB-Audio", e.g.:
+#
+#  cards.USB-Audio.pcm.use_dmix."NoiseBlaster 3000" no
+#
+#  If your device requires such a definition to work correctly, please report it
+#  to <alsa-devel@alsa-project.org>.
+# end more ........... see "/usr/share/alsa/cards/USB-Audio.conf"
+
+
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------

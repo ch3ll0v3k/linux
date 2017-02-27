@@ -1,0 +1,12 @@
+/etc/modprobe.d/blacklist
+>>> blacklist pcspkr
+
+disable terminal tab-completion bell by editing /etc/inputrc and add / replace line:
+
+set bell-style none
+
+You can also use the visible directive but make sure that audible is commented !
+
+#set bell-style visible
+#set bell-style audible
+

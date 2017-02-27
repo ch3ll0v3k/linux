@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<meta charset="UTF-8" />
+<title>RPI-Wireless-Hotspot - eLinux.org</title>
+<meta name="generator" content="MediaWiki 1.25.3" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="eLinux.org (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="http://elinux.org/api.php?action=rsd" />
+<link rel="alternate" hreflang="x-default" href="/RPI-Wireless-Hotspot" />
+<link rel="copyright" href="http://creativecommons.org/licenses/by-sa/3.0/" />
+<link rel="alternate" type="application/atom+xml" title="eLinux.org Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="http://elinux.org/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.sectionAnchor%7Cmediawiki.skinning.interface%7Cmediawiki.ui.button%7Cskins.vector.styles&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="http://elinux.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<style>a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: elinux:resourceloader:filter:minify-css:7:ce2ea8b61fdbcffeb01d2d7d8a6046d1 */</style>
+<script src="http://elinux.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"RPI-Wireless-Hotspot","wgTitle":"RPI-Wireless-Hotspot","wgCurRevisionId":417201,"wgRevisionId":417201,"wgArticleId":31070,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"RPI-Wireless-Hotspot","wgRelevantArticleId":31070,"wgIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"hidesig":true,"preview":true,"previewDialog":false,"publish":true}});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($,jQuery){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function($,jQuery){mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\"});});
+/* cache key: elinux:resourceloader:filter:minify-js:7:a5c52c063dc436c1ca7c9f456936a5e9 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax","skins.vector.js"]);
+}</script>
+<style type='text/css'>
+li#pt-openidlogin {
+background: url(/extensions/OpenID/skin/icons/openid-inputicon.png) top left no-repeat;
+padding-left: 20px;
+text-transform: none;
+}
+</style>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/skins/Vector/csshover.min.htc")}</style><![endif]-->
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-RPI-Wireless-Hotspot skin-vector action-view vector-animateLayout">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><script>document.write("\u003Cdiv id=\"localNotice\" lang=\"en\" dir=\"ltr\"\u003E\u003Cp\u003E\u003Cbr /\u003E\n\u003C/p\u003E\u003C/div\u003E");</script></div>
+						<h1 id="firstHeading" class="firstHeading" lang="en"><span dir="auto">RPI-Wireless-Hotspot</span></h1>
+						<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From eLinux.org</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-navigation">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#What_does_it_do.3F"><span class="tocnumber">1</span> <span class="toctext">What does it do?</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#What_do_you_need.3F"><span class="tocnumber">2</span> <span class="toctext">What do you need?</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#What_skill_level_is_required.3F"><span class="tocnumber">3</span> <span class="toctext">What skill level is required?</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#How_does_it_work.3F"><span class="tocnumber">4</span> <span class="toctext">How does it work?</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Instructions"><span class="tocnumber">5</span> <span class="toctext">Instructions</span></a></li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="What_does_it_do.3F">What does it do?</span></h1>
+<p>This project configures your Raspberry Pi to connect to the Internet through ethernet, and share that connection over WiFi.
+</p>
+<h1><span class="mw-headline" id="What_do_you_need.3F">What do you need?</span></h1>
+<ul><li>Any Raspberry Pi, model B with power supply</li>
+<li>A boot SD card for the Raspberry Pi.</li>
+<li>A USB WiFi device that supports "Access Point" mode; the <a href="/index.php?title=Raspberry_Pi_3&amp;action=edit&amp;redlink=1" class="new" title="Raspberry Pi 3 (page does not exist)">Raspberry Pi 3</a> has a built-in AP Wi-Fi module.</li>
+<li>An Ethernet cable to connect to the local network.</li></ul>
+<p>Please make sure you Wifi dongle supports Access Point or Master Mode
+</p>
+<ul><li>Edimax does <b>NOT</b> support Access Point (<b>UPDATE 8/22/15</b>: Edimax DOES support Access point. Updated project has rtl drivers in hostapd 2.4: <a rel="nofollow" class="external text" href="https://github.com/lostincynicism/hostapd-rtl8188">Raspberry Hotspot with Edimax USB WiFi Adapter</a>)</li>
+<li>AirLink 101 / AWL5088 does <b>NOT</b> support Access Point</li>
+<li>Panda Wireless Ultra, Mid-Range, 300Mbps and Dual Band Wireless N adapters support Access Point</li>
+<li>Ralink RT5370 and RT5372 <b>DO</b> support Access Point</li></ul>
+<h1><span class="mw-headline" id="What_skill_level_is_required.3F">What skill level is required?</span></h1>
+<p>This project does not require any coding or compilation. Very basic Linux and networking knowledge would be useful, but not essential.
+</p><p>To edit a configuration file (for example /etc/udhcpd.conf) use the following command
+</p>
+<pre>sudo nano /etc/udhcpd.conf
+</pre>
+<p>You will find yourself in a simple editor. Move around using the arrow keys. To save the file press Ctrl-o. To exit press Ctrl-x.
+</p>
+<h1><span class="mw-headline" id="How_does_it_work.3F">How does it work?</span></h1>
+<p>The Raspberry Pi is configured as a WiFi Hotspot, just like you would see
+in an internet cafe. It allows you to connect to the internet over WiFi using the
+Raspberry Pi as the bridge to the internet.
+The basic steps are
+</p>
+<ul><li>Enable a WiFi Access Point and broadcast on the channel of your choice</li>
+<li>Assign dynamic IP addresses to any device that connects to WiFi network</li>
+<li>Join the WiFi and Ethernet networks together by using Network Address Translation</li></ul>
+<h1><span class="mw-headline" id="Instructions">Instructions</span></h1>
+<p>The following steps were performed on Raspbian but should be much the same on any Debian-based distro.
+</p><p>1. Install the necessary software.
+</p>
+<pre>sudo apt-get install hostapd udhcpd
+</pre>
+<p>2. Configure DHCP. Edit the file /etc/udhcpd.conf and configure it like this:
+</p>
+<pre>start 192.168.42.2 # This is the range of IPs that the hostspot will give to client devices.
+end 192.168.42.20
+interface wlan0 # The device uDHCP listens on.
+remaining yes
+opt dns 8.8.8.8 4.2.2.2 # The DNS servers client devices will use.
+opt subnet 255.255.255.0
+opt router 192.168.42.1 # The Pi's IP address on wlan0 which we will set up shortly.
+opt lease 864000 # 10 day DHCP lease time in seconds
+</pre>
+<p>Edit the file /etc/default/udhcpd and change the line:
+</p>
+<pre>DHCPD_ENABLED="no"
+</pre>
+<p>to
+</p>
+<pre>#DHCPD_ENABLED="no"
+</pre>
+<p>You will need to give the Pi a static IP address with the following command:
+</p>
+<pre>sudo ifconfig wlan0 192.168.42.1
+</pre>
+<p>To set this up automatically on boot, edit the file /etc/network/interfaces and replace the line "iface wlan0 inet dhcp" to:
+</p>
+<pre>iface wlan0 inet static
+  address 192.168.42.1
+  netmask 255.255.255.0
+</pre>
+<p>If the line "iface wlan0 inet dhcp" is not present, add the above lines to the bottom of the file.
+</p><p>Change the lines (they probably won't all be next to each other):
+</p>
+<pre>allow-hotplug wlan0
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet manual
+</pre>
+<p>to:
+</p>
+<pre>#allow-hotplug wlan0
+#wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+#iface default inet dhcp
+</pre>
+<p>3. Configure HostAPD. You can create an open network, or a WPA-secured network. A secure network is recommended to prevent unauthorized use and tampering, but you can also create an open network. To create a WPA-secured network, edit the file /etc/hostapd/hostapd.conf (create it if it doesn't exist) and add the following lines:
+</p>
+<pre>interface=wlan0
+driver=nl80211
+ssid=My_AP
+hw_mode=g
+channel=6
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=My_Passphrase
+wpa_key_mgmt=WPA-PSK
+#wpa_pairwise=TKIP	# You better do not use this weak encryption (only used by old client devices)
+rsn_pairwise=CCMP
+</pre>
+<p>Change ssid=, channel=, and wpa_passphrase= to values of your choice. <i>SSID</i> is the hotspot's name which is broadcast to other devices, <i>channel</i> is what frequency the hotspot will run on, <i>wpa_passphrase</i> is the password for the wireless network. For many, many more options see the file /usr/share/doc/hostapd/examples/hostapd.conf.gz
+</p><p>If you would like to create an open network, put the following text into /etc/hostapd/hostapd.conf:
+</p>
+<pre>interface=wlan0
+ssid=My_AP
+hw_mode=g
+channel=6
+auth_algs=1
+wmm_enabled=0
+</pre>
+<p>Change ssid= and channel= to values of your choice. Note that anyone will be able to connect to your network, which is generally not a good idea. Also, some regions will hold an access point's owner responsible for any traffic that passes though an open wireless network, regardless of who actually caused that traffic.
+</p><p>Only use channels 1, 6, or 11. Never use channel 12-13 since it can't used by all devices.
+</p><p>In addition the built-in <a href="/index.php?title=Raspberry_Pi_3&amp;action=edit&amp;redlink=1" class="new" title="Raspberry Pi 3 (page does not exist)">Raspberry Pi 3</a> Wi-Fi module seems to require the following additional parameters:
+</p>
+<pre>ieee80211n=1          # 802.11n support
+wmm_enabled=1         # QoS support
+ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
+</pre>
+<p>Edit the file /etc/default/hostapd and change the line:
+</p>
+<pre>#DAEMON_CONF=""
+</pre>
+<p>to:
+</p>
+<pre>DAEMON_CONF="/etc/hostapd/hostapd.conf"
+</pre>
+<p>4. Configure NAT (Network Address Translation). NAT is a technique that allows several devices to use a single connection to the internet. Linux supports NAT using Netfilter (also known as iptables) and is fairly easy to set up. First, enable IP forwarding in the kernel:
+</p>
+<pre>sudo sh -c "echo 1 &gt; /proc/sys/net/ipv4/ip_forward"
+</pre>
+<p>To set this up automatically on boot, edit the file /etc/sysctl.conf and add the following line to the bottom of the file:
+</p>
+<pre>net.ipv4.ip_forward=1
+</pre>
+<p>Second, to enable NAT in the kernel, run the following commands:
+</p>
+<pre>sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
+</pre>
+<p>These instructions don't give a good solution for rerouting https and for URLs referring to a page inside a domain, like www.nu.nl/38274.htm. The user will see a 404 error.
+Your Pi is now NAT-ing. To make this permanent so you don't have to run the commands after each reboot, run the following command:
+</p>
+<pre>sudo sh -c "iptables-save &gt; /etc/iptables.ipv4.nat"
+</pre>
+<p>Now edit the file /etc/network/interfaces and add the following line to the bottom of the file:
+</p>
+<pre>up iptables-restore &lt; /etc/iptables.ipv4.nat
+</pre>
+<p>5. Fire it up! Run the following commands to start the access point:
+</p>
+<pre>sudo service hostapd start
+sudo service udhcpd start
+</pre>
+<p>Your Pi should now be hosting a wireless hotspot. To get the hotspot to start on boot, run these additional commands:
+</p>
+<pre>sudo update-rc.d hostapd enable
+sudo update-rc.d udhcpd enable
+</pre>
+<p>At the completion of these instructions, your Pi should be providing a wireless network and allowing other devices to connect to the Internet. From my experience, the Pi makes a decent access point, although with cheaper WiFi dongles range will be fairly limited. I haven't stress tested this setup, but it seems to work fairly well and is handy when a "real" access point isn't available. I wrote most of the instructions from memory, if you find any errors/typos I'll correct them.
+</p><p>This tutorial originally was a post on the Raspberry Pi forum <a rel="nofollow" class="external text" href="http://www.raspberrypi.org/phpBB3/viewtopic.php?f=36&amp;t=19120">here</a>, you can reply to that topic if you have issues. Thanks go to all the people who tested my tutorial on the forum, and to poing who contributed the WPA HostAPD config.
+</p><p><br />
+<b>Please make sure you Wifi dongle supports Access Point or Master Mode</b>
+</p>
+<ul><li> Edimax doesn't support Access Point  (<b>UPDATE 8/22/15</b>: Edimax DOES support Access point, hostapd 2.4 with rtl driver: <a rel="nofollow" class="external text" href="https://github.com/lostincynicism/hostapd-rtl8188">Hostapd-rtl8188</a>)</li>
+<li> AirLink 101  / AWL5088 doesn't support Access Point</li>
+<li> Panda Wireless PAU03, PAU05, PAU06, PAU07, PAU09 Wireless N USB Adapters support Access Point</li>
+<li> Ralink RT5370 supports Access Point</li></ul>
+
+<!-- 
+NewPP limit report
+CPU time usage: 0.018 seconds
+Real time usage: 0.026 seconds
+Preprocessor visited node count: 18/1000000
+Preprocessor generated node count: 24/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 - -total
+-->
+
+<!-- Saved in parser cache with key elinux:pcache:idhash:31070-0!*!0!!en!*!* and timestamp 20160914082930 and revision id 417201
+ -->
+</div>									<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="http://elinux.org/index.php?title=RPI-Wireless-Hotspot&amp;oldid=417201">http://elinux.org/index.php?title=RPI-Wireless-Hotspot&amp;oldid=417201</a>"					</div>
+													<div id='catlinks' class='catlinks catlinks-allhidden'></div>												<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=RPI-Wireless-Hotspot" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li><li id="pt-createaccount"><a href="/Special:RequestAccount" title="You are encouraged to create an account and log in; however, it is not mandatory">Request account</a></li><li id="pt-openidlogin"><a href="/index.php?title=Special:OpenIDLogin&amp;returnto=RPI-Wireless-Hotspot">Log in / create account with OpenID</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/RPI-Wireless-Hotspot"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+															<li  id="ca-talk"><span><a href="/Talk:RPI-Wireless-Hotspot"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label"><span
+							style="display: block;" 							>Variants</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/RPI-Wireless-Hotspot" >Read</a></span></li>
+															<li id="ca-viewsource"><span><a href="/index.php?title=RPI-Wireless-Hotspot&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/index.php?title=RPI-Wireless-Hotspot&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/index.php" id="searchform">
+														<div id="simpleSearch">
+															<input type="search" name="search" placeholder="Search" title="Search eLinux.org [f]" accesskey="f" id="searchInput" /><input type="hidden" value="Special:Search" name="title" /><input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton" /><input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchButton" class="searchButton" />								</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a style="background-image: url(/images/6/68/Logo_clear.png);" href="/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-Navigation' aria-labelledby='p-Navigation-label'>
+			<h3 id='p-Navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+													<li id="n-mainpage"><a href="/Main_Page" title="Visit the main page [z]" accesskey="z">Main Page</a></li>
+													<li id="n-portal"><a href="/eLinux.org:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li>
+													<li id="n-currentevents"><a href="/eLinux.org:Current_events" title="Find background information on current events">Current events</a></li>
+													<li id="n-recentchanges"><a href="/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+													<li id="n-help"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li>
+													<li id="n-Volunteering"><a href="/Sitesupport-url">Volunteering</a></li>
+													<li id="n-Bug-Tracker"><a href="http://bugs.elinux.org" rel="nofollow">Bug Tracker</a></li>
+											</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-Where_else_to_find_us' aria-labelledby='p-Where_else_to_find_us-label'>
+			<h3 id='p-Where_else_to_find_us-label'>Where else to find us</h3>
+
+			<div class="body">
+									<ul>
+													<li id="n-Google.2B-Community"><a href="https://plus.google.com/u/0/communities/113852495250648539361" rel="nofollow">Google+ Community</a></li>
+													<li id="n-Twitter-.28.40elinux.29"><a href="https://twitter.com/elinux" rel="nofollow">Twitter (@elinux)</a></li>
+													<li id="n-.23elinux-on-Freenode"><a href="irc://#elinux@irc.freenode.net" rel="nofollow">#elinux on Freenode</a></li>
+													<li id="n-Facebook-.28.40elinux.org.29"><a href="https://www.facebook.com/elinuxorg-750739005020534/" rel="nofollow">Facebook (@elinux.org)</a></li>
+													<li id="n-Mailing-Lists"><a href="http://www.elinux.org/ELinuxWiki:Mailing_List" rel="nofollow">Mailing Lists</a></li>
+											</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+													<li id="t-whatlinkshere"><a href="/Special:WhatLinksHere/RPI-Wireless-Hotspot" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+													<li id="t-recentchangeslinked"><a href="/Special:RecentChangesLinked/RPI-Wireless-Hotspot" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+													<li id="t-specialpages"><a href="/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+													<li id="t-print"><a href="/index.php?title=RPI-Wireless-Hotspot&amp;printable=yes" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>
+													<li id="t-permalink"><a href="/index.php?title=RPI-Wireless-Hotspot&amp;oldid=417201" title="Permanent link to this revision of the page">Permanent link</a></li>
+													<li id="t-info"><a href="/index.php?title=RPI-Wireless-Hotspot&amp;action=info" title="More information about this page">Page information</a></li>
+											</ul>
+							</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 21 August 2016, at 23:58.</li>
+											<li id="footer-info-viewcount">This page has been accessed 409,712 times.</li>
+											<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://creativecommons.org/licenses/by-sa/3.0/">a Creative Commons Attribution-ShareAlike 3.0 Unported License</a> unless otherwise noted.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="/eLinux.org:Privacy_policy" title="eLinux.org:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/eLinux.org:About" title="eLinux.org:About">About eLinux.org</a></li>
+											<li id="footer-places-disclaimer"><a href="/eLinux.org:General_disclaimer" title="eLinux.org:General disclaimer">Disclaimers</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+															<a href="http://creativecommons.org/licenses/by-sa/3.0/"><img src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" alt="a Creative Commons Attribution-ShareAlike 3.0 Unported License" width="88" height="31" /></a>
+													</li>
+											<li id="footer-poweredbyico">
+															<a href="//www.mediawiki.org/"><img src="/resources/assets/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31" /></a>
+													</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>if(window.jQuery)jQuery.ready();</script><script>if(window.mw){
+mw.loader.state({"site":"loading","user":"ready","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.toc","mediawiki.action.view.postEdit","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest"],null,true);
+}</script>
+<script>if(window.mw){
+document.write("\u003Cscript src=\"http://elinux.org/load.php?debug=false\u0026amp;lang=en\u0026amp;modules=site\u0026amp;only=scripts\u0026amp;skin=vector\u0026amp;*\"\u003E\u003C/script\u003E");
+}</script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-119847-6");
+pageTracker._trackPageview();
+} catch(err) {}
+</script><script>if(window.mw){
+mw.config.set({"wgBackendResponseTime":162});
+}</script>
+	</body>
+</html>
+	

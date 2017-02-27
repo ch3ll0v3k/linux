@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Hostapd : The Linux Way to create Virtual Wifi Access Point | Foo, Bar and Foobar</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://nims11.wordpress.com/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Foo, Bar and Foobar &raquo; Feed" href="https://nims11.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Foo, Bar and Foobar &raquo; Comments Feed" href="https://nims11.wordpress.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Foo, Bar and Foobar &raquo; Hostapd : The Linux Way to create Virtual Wifi Access&nbsp;Point Comments Feed" href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s1.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1473172720h&ver=4.6.1-RC1-38499"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='all-css-0' href='https://s2.wp.com/_static/??-eJyNkN0OgjAMhV/IuUgE9ML4LPtpYNiyhQ4Ib+/AGBM0izdNT3u+nKZyDsL4PkIfJY0i4Ni4nuUcjCfB5BCWnToa5oP8jaF7AMsOYlDmITb1Zdfom0+OH6yyLBv0WuF/3jin1ZIqTiCmInfPAKgiWBE8x53KYcYPkOYUVFwdBNYpQKBky2EUqje1tm36QTbm9VatwwDMIlVyI4nYpqCNu9PtdK7quiwu17J7AkHXoAM=' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='all-css-2' href='https://s0.wp.com/wp-content/themes/pub/twentytwelve/style.css?m=1463090519h' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://s0.wp.com/wp-content/themes/pub/twentytwelve/css/ie.css?m=1423935238h&#038;ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='all-css-4' href='https://s0.wp.com/_static/??-eJx9kNEOgjAMRX/IWTVEn4zfMsYcNWVdaHHh7x1CDMSEh3X3dj03zSAn4ziqjwra+s4LpKEGzaUxlkpvD6IjeZOT4+7oRA6AEFmxYPIT88MqrBtMoiFgmQmeDbGzihw3xjzJYr+H9r4mDkUGKFMruwclFp2jQVrbT/By71HCDi2V3QJvzR+0/FNbQSCuLe2lZmyCV/luP2sTemyMjY0hFJ3YR3c/V9dTOZfb5fUBcbqWbA==' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFj+sKwjAMhV/IrHib+kN8ltrFkdqbTevQpzcD/aEOhUDIyZfDiRoSUDCudsjKSl0q5tuzNZZn6hcAnvqsCzaewgs2MRQMZWR9PJJDqIxZ96KJ0SlOcCly8cgs0MT2PRKFK+HwF7NYkjZnyMh0/3L1FZKrPQVWGZ080MGY4WOSq4Pfz1dtu14sd5utfQAruHB+'></script>
+<link rel='stylesheet' id='all-css-0' href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1377793621h' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://nims11.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='BrainFuck : An eight-command awesome esoteric programming&nbsp;language' href='https://nims11.wordpress.com/2011/11/18/brainfk-an-eight-command-only-esoteric-programming-language/' />
+<link rel='next' title='Nested X sessions with&nbsp;Xephyr' href='https://nims11.wordpress.com/2012/06/24/nested-x-servers-with-xephyr/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/" />
+<link rel='shortlink' href='http://wp.me/p1I6vs-1M' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=json&amp;url=https%3A%2F%2Fnims11.wordpress.com%2F2012%2F04%2F27%2Fhostapd-the-linux-way-to-create-virtual-wifi-access-point%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=xml&amp;url=https%3A%2F%2Fnims11.wordpress.com%2F2012%2F04%2F27%2Fhostapd-the-linux-way-to-create-virtual-wifi-access-point%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Hostapd : The Linux Way to create Virtual Wifi Access Point" />
+<meta property="og:url" content="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/" />
+<meta property="og:description" content="NOTE: Although this guide should work in most cases, it is not flawless and still requires few minor modifications to make the process bug-free. Please do point out corrections and changes. (After …" />
+<meta property="article:published_time" content="2012-04-27T07:13:15+00:00" />
+<meta property="article:modified_time" content="2014-05-29T14:25:10+00:00" />
+<meta property="og:site_name" content="Foo, Bar and Foobar" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+<meta name="twitter:card" content="summary" />
+<meta property="fb:app_id" content="249643311490" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+<link rel="shortcut icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon-precomposed" href="https://s0.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://nims11.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://nims11.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://nims11.wordpress.com/osd.xml" title="Foo, Bar and Foobar" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#e6e6e6" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Foo, Bar and Foobar" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="A blog with a meaningless title" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://nims11.wordpress.com/feed/;icon-uri=https://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico" /><meta name="title" content="Hostapd : The Linux Way to create Virtual Wifi Access&nbsp;Point | Foo, Bar and Foobar on WordPress.com" />
+<meta name="description" content="NOTE: Although this guide should work in most cases, it is not flawless and still requires few minor modifications to make the process bug-free. Please do point out corrections and changes. (After you are done with this post, please do checkout my Python Hostapd Client) I was recently looking into ways to use my laptop&#039;s&hellip;" />
+		<script type="text/javascript" src="//c.amazon-adsystem.com/aax2/amzn_ads.js"></script>
+		<script type="text/javascript">
+		try { amznads.getAds("3033"); } catch(e) { /* ignore */ }
+		</script>
+		<script type="text/javascript">
+		try {
+			var a9_p = amznads.getKeys(),
+			_ipw_custom = {
+				wordAds: '0',
+				adSafe: '1',
+				domain: 'nims11.wordpress.com',
+				pageURL: 'https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/'
+			};
+			if("undefined"!=typeof a9_p&&""!=a9_p&&null!==a9_p&&"[object Array]"===Object.prototype.toString.call(a9_p)){var a="",b=0,c=a9_p.length;a9_p.sort();for(var d=0;d<c;d++){a9_p[d-b]=a9_p[d-b].replace(/a1x6p/,"a160x600p");var e=a9_p[d-b].split("p");e[0]==a&&(a9_p.splice(d-b,1),b++);a=e[0]}_ipw_custom.amznPay=a9_p};document.close();
+		} catch(e) {}
+		</script>		<!-- IPONWEB header script -->
+		<script type="text/javascript">
+			window.__ATA = {
+				scriptSrc: '//s.pubmine.com/showad.js',
+				slotPrefix: 'automattic-id-',
+				initAd: function(o) {
+					var o = o || {},
+						g = window,
+						d = g.document,
+						wr = d.write,
+						id = g.__ATA.id();
+					wr.call(d, '<div id="' + id + '" data-section="' + (o.sectionId || 0) + '"' + (o.type ? ('data-type="' + o.type + '"') : '') + ' ' + (o.forcedUrl ? ('data-forcedurl="' + o.forcedUrl + '"') : '') + ' style="width:' + (o.width || 0) + 'px; height:' + (o.height || 0) + 'px;">');
+					g.__ATA.displayAd(id);
+					wr.call(d, '</div>');
+				},
+				displayAd: function(id) {
+					window.__ATA.ids = window.__ATA.ids || {};
+					window.__ATA.ids[id] = 1;
+				},
+				customParams: _ipw_custom,
+				id: function() {
+					return window.__ATA.slotPrefix + (parseInt(Math.random() * 10000, 10) + 1 + (new Date()).getMilliseconds());
+				}
+			};
+			(function(d, ata) {
+				var pr = "https:" === d.location.protocol ? "https:" : "http:",
+					src = pr + ata.scriptSrc,
+					st = "text/javascript";
+				d.write('<scr' + 'ipt type="' + st + '" src="' + src + '"><\/scr' + 'ipt>');
+			})(window.document, window.__ATA);
+		</script>
+		<script type="text/javascript">
+		jQuery(window).ready(function () {
+			jQuery("a.wpa-about").text("About these ads");
+		});
+		</script><link rel="amphtml" href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/amp/" /><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="single single-post postid-110 single-format-standard mp6 customizer-styles-applied custom-font-enabled single-author highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+				<hgroup>
+			<h1 class="site-title"><a href="https://nims11.wordpress.com/" title="Foo, Bar and Foobar" rel="home">Foo, Bar and Foobar</a></h1>
+			<h2 class="site-description">A blog with a meaningless title</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle">Menu</button>
+			<a class="assistive-text" href="#content" title="Skip to content">Skip to content</a>
+			<div class="nav-menu"><ul><li ><a href="https://nims11.wordpress.com/">Home</a></li><li class="page_item page-item-2"><a href="https://nims11.wordpress.com/about/">About Me</a></li></ul></div>
+		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-110" class="post-110 post type-post status-publish format-standard hentry category-linux-and-floss tag-access-point tag-dhcp tag-dhcpd tag-hostapd tag-hotspot tag-iptables tag-linux tag-nat tag-wifi">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">Hostapd : The Linux Way to create Virtual Wifi Access&nbsp;Point</h1>
+										<div class="comments-link">
+					<a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/#comments">475 Replies</a>				</div><!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<blockquote><p>NOTE: Although this guide should work in most cases, it is not flawless and still requires few minor modifications to make the process bug-free. Please do point out corrections and changes.</p></blockquote>
+<p>(After you are done with this post, please do checkout my <a title="Hostapd Python Client" href="https://nims11.wordpress.com/2012/11/26/hostapd-python-client/">Python Hostapd Client</a>)</p>
+<p>I was recently looking into ways to use my laptop&#8217;s wifi adapter as a wireless access point to enable my phone (Nokia E63) and playstation portable to connect to the internet through it. Ad-hoc feature may be used to share internet through wifi, but it doesn&#8217;t work with many phones and my PSP. I found <a href="http://www.connectify.me/" target="_blank">connectify</a> and <a href="http://virtualrouter.codeplex.com/" target="_blank">virtual router</a> for Windows which served this purpose, unsatisfactorily. Other than the reasons like Virtual Router not detecting my 3g modem and Connectify (free version) not allowing me to set desired ssid for my virtual access point, the biggest issue with these two was the limited modes available for the access point. Both the programs offered only WPA2-PSK encryption for infrastructure mode and WEP and open encryption for ad-hoc modes. Many devices connect only through infrastructure mode and support for WPA2-PSK is absent in few devices (including the PSP). Also, since I am a Linux user, I needed something else.</p>
+<p>This is where <strong>hostapd</strong> kicks in.<br />
+<span id="more-110"></span></p>
+<h2>HOSTAPD</h2>
+<blockquote><p>“hostapd is a user space daemon for access point and authentication servers. “</p></blockquote>
+<p>In simple words, hostapd allows you to create software wifi access points allowing decent amount of configuration options. In rest of this post, I will show how to create a software access point in Linux using <strong>hostapd</strong> and share your internet to the devices through it. I have used my Lenovo Z560 with ath9k wifi driver under Arch Linux and have also tested it under Ubuntu 11.10. But the method is also applicable for other Linux distros and supported hardware.</p>
+<p>If the method works/doesn&#8217;t work for a non-Atheros wifi card, please do comment.</p>
+<h2>REQUIREMENTS</h2>
+<ul>
+<li>Supported Wireless Card (ie. supports master mode)</li>
+<li>An internet connection you want to share. (not strictly a neccessity)</li>
+<li>A linux distro</li>
+</ul>
+<h2>CHECKING WIFI CARD SUPPORT</h2>
+<p>First of all, you will need to find if your wireless card is supported by hostapd.</p>
+<p>To check what kernel driver is in use for your wireless card, type the follwing in the terminal</p>
+<pre class="brush: bash; title: ; notranslate" title="">lspci -k | grep -A 3 -i &quot;network&quot;</pre>
+<p>Look for the section in the output which corresponds to your Wireless controller. In my case, it is</p>
+<blockquote><p>06:00.0 Network controller: Atheros Communications Inc. AR9285 Wireless Network Adapter (PCI-Express) (rev 01)<br />
+Subsystem: Lenovo Device 30a1<br />
+Kernel driver in use: <strong>ath9k</strong></p></blockquote>
+<p>The Bold part is my kernel driver in use. It will vary depending on your wifi card and driver you are using.</p>
+<p>Now get the interface details of your wireless driver by</p>
+<pre class="brush: bash; title: ; notranslate" title="">modinfo ath9k | grep 'depend'</pre>
+<p>replace <strong>ath9k</strong> by your wifi kernel driver you determined in the last step. In my case, the output was</p>
+<blockquote><p>depends: ath9k_hw,mac80211,ath9k_common,ath,cfg80211</p></blockquote>
+<p>modinfo says my Kernel driver supports mac80211 interface which is supported by hostapd which implies that my wifi card is compatible with hostapd.</p>
+<h4>Supported wireless cards/drivers</h4>
+<ul>
+<li><a href="http://wireless.kernel.org/en/developers/Documentation/mac80211">Linux mac80211 drivers</a></li>
+<li><a href="http://w1.fi/">Host AP driver for Prism2/2.5/3</a></li>
+<li><a href="http://sourceforge.net/projects/madwifi/">madwifi (Atheros ar521x)</a></li>
+<li>BSD net80211 layer (e.g., Atheros driver) (FreeBSD 6-CURRENT)</li>
+</ul>
+<h2>INSTALLING HOSTAPD</h2>
+<p>Install Hostapd from your distro&#8217;s repo</p>
+<pre class="brush: bash; gutter: false; title: ; notranslate" title="">
+#Arch Linux
+sudo pacman -S hostapd
+#Ubuntu
+sudo  apt-get update &amp;&amp; sudo apt-get install hostapd
+#Should be available in official repo of your distro
+</pre>
+<p>Or Download Hostapd <a href="http://w1.fi/hostapd/" target="_blank">here</a> and compile it.</p>
+<h2>CONFIGURING HOSTAPD</h2>
+<p>The <em>/etc/hostapd/hostapd.conf</em> is the main configuration which you need to deal with in order to set up a <strong>SoftAP</strong>.</p>
+<p>This is the minimal configuration setting which will let you test if hostapd is working. Create a file <strong>~/hostapd-test.conf<br />
+</strong>with the following content:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+#change wlan0 to your wireless device
+interface=wlan0
+driver=nl80211
+ssid=test
+channel=1
+</pre>
+<p>start hostapd by</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+sudo hostapd ~/hostapd-test.conf
+</pre>
+<p>Use a wifi device to check if the access point is being detected. You won&#8217;t be able to connect to it at present.<br />
+Once hostapd is working fine, its time to configure hostapd with more options.<br />
+Here is a brief overview of some of its options:</p>
+<pre class="brush: bash; gutter: true; title: ; notranslate" title="">
+#sets the wifi interface to use, is wlan0 in most cases
+interface=wlan0
+#driver to use, nl80211 works in most cases
+driver=nl80211
+#sets the ssid of the virtual wifi access point
+ssid=dontMessWithVincentValentine
+#sets the mode of wifi, depends upon the devices you will be using. It can be a,b,g,n. Setting to g ensures backward compatiblity.
+hw_mode=g
+#sets the channel for your wifi
+channel=6
+#macaddr_acl sets options for mac address filtering. 0 means &quot;accept unless in deny list&quot;
+macaddr_acl=0
+#setting ignore_broadcast_ssid to 1 will disable the broadcasting of ssid
+ignore_broadcast_ssid=0
+#Sets authentication algorithm
+#1 - only open system authentication
+#2 - both open system authentication and shared key authentication
+auth_algs=1
+
+#####Sets WPA and WPA2 authentication#####
+#wpa option sets which wpa implementation to use
+#1 - wpa only
+#2 - wpa2 only
+#3 - both
+wpa=3
+#sets wpa passphrase required by the clients to authenticate themselves on the network
+wpa_passphrase=KeePGuessinG
+#sets wpa key management
+wpa_key_mgmt=WPA-PSK
+#sets encryption used by WPA
+wpa_pairwise=TKIP
+#sets encryption used by WPA2
+rsn_pairwise=CCMP
+
+#################################
+
+#####Sets WEP authentication#####
+#WEP is not recommended as it can be easily broken into
+wep_default_key=0
+wep_key0=qwert    #5,13, or 16 characters
+#optionally you may also define wep_key2, wep_key3, and wep_key4
+
+#################################
+#For No encryption, you don't need to set any options
+</pre>
+<p>So, here is my complete <em>/etc/hostapd/hostapd.conf</em> with WPA authentication options.</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+interface=wlan0
+driver=nl80211
+ssid=dontMessWithVincentValentine
+hw_mode=g
+channel=6
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=3
+wpa_passphrase=KeePGuessinG
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+</pre>
+<h2>SETTING UP THE DHCP SERVER</h2>
+<blockquote><p><strong>Alternative Method</strong>: I recommend using dnsmasq over dhcpd for this scenario mainly due to the ease in configuring it. I have continued this post from this point in a <a title="Using Hostapd with dnsmasq to create Virtual Wifi Access Point in Linux" href="https://nims11.wordpress.com/2013/05/22/using-hostapd-with-dnsmasq-to-create-virtual-wifi-access-point-in-linux/" target="_blank">new separate post</a> which uses dnsmasq instead of dhcpd. If you have any reason to choose dhcpd over dnsmasq or if dnsmasq isn&#8217;t working for you, then carry on.</p></blockquote>
+<p>Now that hostapd is running fine, you need to setup a DHCP server to run along with hostapd in order to assign ip address to the devices connecting to the access point. Setting up a dhcp server is quite straightforward.</p>
+<p>Install dhcp server from your distro&#8217;s repo.</p>
+<pre class="brush: bash; gutter: false; title: ; notranslate" title="">
+#Arch Linux
+sudo pacman -S dhcp
+#Ubuntu
+sudo  apt-get update &amp;&amp; sudo apt-get install isc-dhcp-server
+#Fedora
+sudo yum -y install dhcp
+</pre>
+<p>edit /etc/dhcpd.conf (for arch linux) or /etc/dhcp/dhcpd.conf (for Ubuntu) to</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+ddns-update-style none;
+ignore client-updates;
+authoritative;
+option local-wpad code 252 = text;
+
+subnet
+10.0.0.0 netmask 255.255.255.0 {
+# --- default gateway
+option routers
+10.0.0.1;
+# --- Netmask
+option subnet-mask
+255.255.255.0;
+# --- Broadcast Address
+option broadcast-address
+10.0.0.255;
+# --- Domain name servers, tells the clients which DNS servers to use.
+option domain-name-servers
+10.0.0.1, 8.8.8.8, 8.8.4.4;
+option time-offset
+0;
+range 10.0.0.3 10.0.0.13;
+default-lease-time 1209600;
+max-lease-time 1814400;
+}
+</pre>
+<p>options are easy to understand and you may change it according to your needs (if required).</p>
+<h2>FINAL STEPS</h2>
+<p>The final steps involves enabling NAT to share internet in one network interface  with the clients connected through hostapd.</p>
+<p>I have included all the steps to configure wlan interface, enable NAT, start DHCP server and hostapd in the BASH script below</p>
+<p>Let the name of this file be <em><strong>initSoftAP.</strong></em><strong><br />
+</strong>Copy the BASH file below to the file <em>initSoftAP<strong>.</strong></em>(and make changes to file according to your system)</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+#!/bin/bash
+#Initial wifi interface configuration
+ifconfig $1 up 10.0.0.1 netmask 255.255.255.0
+sleep 2
+###########Start DHCP, comment out / add relevant section##########
+#Thanks to Panji
+#Doesn't try to run dhcpd when already running
+if [ &quot;$(ps -e | grep dhcpd)&quot; == &quot;&quot; ]; then
+dhcpd $1 &amp;
+fi
+###########
+#Enable NAT
+iptables --flush
+iptables --table nat --flush
+iptables --delete-chain
+iptables --table nat --delete-chain
+iptables --table nat --append POSTROUTING --out-interface $2 -j MASQUERADE
+iptables --append FORWARD --in-interface $1 -j ACCEPT
+
+#Thanks to lorenzo
+#Uncomment the line below if facing problems while sharing PPPoE, see lorenzo's comment for more details
+#iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+
+sysctl -w net.ipv4.ip_forward=1
+#start hostapd
+hostapd /etc/hostapd/hostapd.conf 1&gt;/dev/null
+killall dhcpd
+</pre>
+<p><strong>Script Changes </strong>(12/9/12) : Added check for already running dhcpd process (Thanks to <a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-4/#comment-161">Panji</a>), Added an optional line to fix issues related to PPPoE connection sharing (See <a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-4/#comment-154">lorenzo&#8217;s comment</a>)</p>
+<p><em>It might be more convenient to use <strong>hostapd -B /etc/hostapd/hostapd.conf </strong>which runs hostapd in background. (Thanks to <strong>Enda</strong> for pointing out)</em></p>
+<p>Make this file executable, and run it. The syntax for executing it is</p>
+<blockquote><p>./initSoftAP <em>wifi_card_interface</em> <em>interface_with_internet</em></p></blockquote>
+<pre class="brush: bash; gutter: true; title: ; notranslate" title="">
+chmod +x initSoftAP
+./initSoftAP wlan0 eth0
+</pre>
+<p>The<em> &#8220;wifi_card_interface</em>&#8221; will be <em>wlan0</em> most of the cases. For &#8220;<em>interface_with_internet</em>&#8220;, since I want to share internet from my ethernet network interface, I used <em>eth0</em>. If I ever want to share internet from my 3g modem, I use <em>ppp0</em>. (These values need not be same for everyone)<br />
+You may see available network interfaces by</p>
+<pre class="brush: bash; gutter: true; title: ; notranslate" title="">
+ifconfig -a
+</pre>
+<p><strong>Note:</strong></p>
+<ul>
+<li>If dhcpd is failing to start and throwing errors like <strong><em>No subnet declaration for wlan0,</em> </strong>take a look at these comments by <a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-7/#comment-429" target="_blank">Mahesh</a> and <a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-7/#comment-411" target="_blank">Charlie</a>. Either <a href="https://nims11.wordpress.com/2013/05/22/using-hostapd-with-dnsmasq-to-create-virtual-wifi-access-point-in-linux/" target="_blank">use dnsmasq</a>, or try adding the following to the  /etc/default/isc-dhcp-server file</li>
+</ul>
+<blockquote><p>
+INTERFACES=”wlan0″<br />
+option netbios-name-servers 10.0.0.1
+</p></blockquote>
+<ul>
+<li>Raspberry Pi users might want to take a look at Denis Kökeny&#8217;s <a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point//#comment-770" target="_blank">comment</a>.</li>
+</ul>
+<p>Problems, Errors, Feedback or any alternatives? Feel free to reply.</p>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<a class="wpa-about" href="https://wordpress.com/about-these-ads/" rel="nofollow"></a>
+				<div class="u">
+					<script type='text/javascript'>
+					(function(g){g.__ATA.initAd({sectionId:26942, width:300, height:250});})(window);
+					</script>
+				</div>
+			</div>
+		</div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-110" class="share-twitter sd-button share-icon" href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-110" class="share-facebook sd-button share-icon" href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-110" class="share-google-plus-1 sd-button share-icon" href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-25287782-110-57dda9a9d444b' data-src='//widgets.wp.com/likes/#blog_id=25287782&amp;post_id=110&amp;origin=nims11.wordpress.com&amp;obj_id=25287782-110-57dda9a9d444b' data-name='like-post-frame-25287782-110-57dda9a9d444b'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			This entry was posted in <a href="https://nims11.wordpress.com/category/linux-and-floss/" rel="category tag">Linux and FLOSS</a> and tagged <a href="https://nims11.wordpress.com/tag/access-point/" rel="tag">access point</a>, <a href="https://nims11.wordpress.com/tag/dhcp/" rel="tag">dhcp</a>, <a href="https://nims11.wordpress.com/tag/dhcpd/" rel="tag">dhcpd</a>, <a href="https://nims11.wordpress.com/tag/hostapd/" rel="tag">hostapd</a>, <a href="https://nims11.wordpress.com/tag/hotspot/" rel="tag">hotspot</a>, <a href="https://nims11.wordpress.com/tag/iptables/" rel="tag">iptables</a>, <a href="https://nims11.wordpress.com/category/linux/" rel="tag">Linux</a>, <a href="https://nims11.wordpress.com/tag/nat/" rel="tag">nat</a>, <a href="https://nims11.wordpress.com/tag/wifi/" rel="tag">wifi</a> on <a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/" title="12:43 pm" rel="bookmark"><time class="entry-date" datetime="2012-04-27T12:43:15+00:00">April 27, 2012</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://nims11.wordpress.com/author/nims11/" title="View all posts by nims11" rel="author">nims11</a></span></span>.								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">Post navigation</h3>
+					<span class="nav-previous"><a href="https://nims11.wordpress.com/2011/11/18/brainfk-an-eight-command-only-esoteric-programming-language/" rel="prev"><span class="meta-nav">&larr;</span> BrainFuck : An eight-command awesome esoteric programming&nbsp;language</a></span>
+					<span class="nav-next"><a href="https://nims11.wordpress.com/2012/06/24/nested-x-servers-with-xephyr/" rel="next">Nested X sessions with&nbsp;Xephyr <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			475 thoughts on &ldquo;<span>Hostapd : The Linux Way to create Virtual Wifi Access&nbsp;Point</span>&rdquo;		</h2>
+
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-2338">
+		<article id="comment-2338" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://0.gravatar.com/avatar/9e4c69fd9172a1f84a39d37a48b9dfbe?s=44&#038;d=&#038;r=G' class='avatar avatar-44' height='44' width='44' /><cite><b class="fn">Sha156</b> </cite><a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-25/#comment-2338"><time datetime="2016-03-17T09:35:29+00:00">March 17, 2016 at 9:35 am</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<p>Hey,<br />
+We created a virtual access point as mentioned above. The problem is our WiFi is getting saved but not connecting. What could be the problem? Could you please help us to solve this?</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/?replytocom=2338#respond' onclick='return addComment.moveForm( "comment-2338", "2338", "respond", "110" )' aria-label='Reply to Sha156'>Reply</a> <span>&darr;</span>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+	</li><!-- #comment-## -->
+	<li class="pingback odd alt thread-odd thread-alt depth-1 highlander-comment" id="comment-2343">
+		<p>Pingback: <a href='https://sigurnostnamrezi.wordpress.com/2016/03/20/kako-od-debian-linux-a-napraviti-ruter/' rel='external nofollow' class='url'>Kako od Debian Linux-a napraviti ruter | sigurnost na mrezi</a> </p>
+	</li><!-- #comment-## -->
+	<li class="pingback even thread-even depth-1 highlander-comment" id="comment-2377">
+		<p>Pingback: <a href='http://www.brianlinkletter.com/mininet-wifi-software-defined-network-emulator-supports-wifi-networks/' rel='external nofollow' class='url'>Mininet-WiFi: Software defined network emulator supports WiFi networks | Open-Source Routing and Network Simulation</a> </p>
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2413">
+		<article id="comment-2413" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://1.gravatar.com/avatar/48e4c5d5bf0e1819be36c85d33ed632b?s=44&#038;d=&#038;r=G' class='avatar avatar-44' height='44' width='44' /><cite><b class="fn"><a href='http://incompetentobst78.wordpress.com/2014/02/18/pensieri-sul-dgn2200v3/' rel='external nofollow' class='url'>dgn2200 firmware optus mobile</a></b> </cite><a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-25/#comment-2413"><time datetime="2016-05-26T11:55:18+00:00">May 26, 2016 at 11:55 am</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<p>Fabulous, what a website it is! This weblog gives valuable<br />
+facts to us, keep it up.</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/?replytocom=2413#respond' onclick='return addComment.moveForm( "comment-2413", "2413", "respond", "110" )' aria-label='Reply to dgn2200 firmware optus mobile'>Reply</a> <span>&darr;</span>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+	</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-2420">
+		<article id="comment-2420" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://2.gravatar.com/avatar/294be38dd7b2f5d897817fcc759518de?s=44&#038;d=&#038;r=G' class='avatar avatar-44' height='44' width='44' /><cite><b class="fn">Rafael</b> </cite><a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-25/#comment-2420"><time datetime="2016-05-31T21:57:26+00:00">May 31, 2016 at 9:57 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<p>how can i configure a hostapd with eap-sim (without external radius like freeradius)</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/?replytocom=2420#respond' onclick='return addComment.moveForm( "comment-2420", "2420", "respond", "110" )' aria-label='Reply to Rafael'>Reply</a> <span>&darr;</span>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+	</li><!-- #comment-## -->
+	<li class="pingback odd alt thread-odd thread-alt depth-1 highlander-comment" id="comment-2423">
+		<p>Pingback: <a href='http://somepieceof.info/question/server/dhcp-option-domain-name-server/' rel='external nofollow' class='url'>[ASK] server - DHCP option domain name server | Some Piece of Information</a> </p>
+	</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-2463">
+		<article id="comment-2463" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://2.gravatar.com/avatar/e6d138b0eaa0455a42ce1f224995c783?s=44&#038;d=&#038;r=G' class='avatar avatar-44' height='44' width='44' /><cite><b class="fn">Nasri</b> </cite><a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-25/#comment-2463"><time datetime="2016-07-17T11:59:28+00:00">July 17, 2016 at 11:59 am</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<p>Configuration Hostapd in Centos Linux with wireless WiFi adapter Dual Band 2.4 Ghz / 5 Ghz</p>
+<p>It requires skilled professional who is able to configure a wireless adapter that works with Dual Band 2.4 GHz and 5 GHz simultaneously.</p>
+<p>Adapters are available brand Intel and Atheros.</p>
+<p>NOTE: We have a wireless adapter already running at 2.4 Ghz hostapd.<br />
+Implementation Time: Maximum 10 days.<br />
+Service mode: Remote Service via teamviewer to face technical support<br />
+Más información: S-K-Y-P-E: nazrifarran</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/?replytocom=2463#respond' onclick='return addComment.moveForm( "comment-2463", "2463", "respond", "110" )' aria-label='Reply to Nasri'>Reply</a> <span>&darr;</span>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+	</li><!-- #comment-## -->
+	<li class="pingback odd alt thread-odd thread-alt depth-1 highlander-comment" id="comment-2490">
+		<p>Pingback: <a href='http://tena4.eastarwar.xyz/2016/09/04/how-to-create-the-soft-link-in-linux/' rel='external nofollow' class='url'>How To Create The Soft Link In Linux | Information</a> </p>
+	</li><!-- #comment-## -->
+	<li class="pingback even thread-even depth-1 highlander-comment" id="comment-2496">
+		<p>Pingback: <a href='http://nullrend.com/2016/09/12/a-debian-wifi-router/' rel='external nofollow' class='url'>A Debian wifi router &#8211; nullrend blogs</a> </p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+				<nav id="comment-nav-below" class="navigation" role="navigation">
+			<h1 class="assistive-text section-heading">Comment navigation</h1>
+			<div class="nav-previous"><a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/comment-page-24/#comments" >&larr; Older Comments</a></div>
+			<div class="nav-next"></div>
+		</nav>
+		
+		
+	
+					<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">How did you feel about this post? Push in your reply! <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="https://nims11.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+					<input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="20f4c23531" /><input type="hidden" name="_wp_http_referer" value="/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="https://public-api.wordpress.com/connect/?googleplus-sign-in=https%3A%2F%2Fnims11.wordpress.com" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text" value="" /></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=&amp;forcedefault=y&amp;r=G" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=&amp;forcedefault=y&amp;r=G" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=&amp;forcedefault=y&amp;r=G" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=&amp;forcedefault=y&amp;r=G" alt="Google+ photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> You are commenting using your Google+ account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='110' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="1ce74bee83" /></p>
+<input type="hidden" name="genseq" value="1474144681" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="66"/></p>				</form>
+					</div><!-- #respond -->
+		<div style="clear: both"></div>
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+								<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="https://nims11.wordpress.com/2014/03/23/using-multiple-network-interfaces-simultaneously-under-linux-virtualreal/">Using Multiple Network Interfaces simultaneously under Linux&nbsp;(Virtual/Real)</a>
+						</li>
+					<li>
+				<a href="https://nims11.wordpress.com/2013/10/12/ipod-shuffle-4g-under-linux/">IPod Shuffle 4g under&nbsp;Linux</a>
+						</li>
+					<li>
+				<a href="https://nims11.wordpress.com/2013/08/27/handling-constantly-interrupting-downloads-using-curl/">Handling constantly Interrupting Downloads using&nbsp;curl</a>
+						</li>
+					<li>
+				<a href="https://nims11.wordpress.com/2013/07/25/moving-to-nightingale/">Moving to Nightingale</a>
+						</li>
+					<li>
+				<a href="https://nims11.wordpress.com/2013/06/19/running-dota-1-on-linux-with-full-customkeys/">Running Dota (1) on Linux with full&nbsp;customkeys</a>
+						</li>
+				</ul>
+		</aside>		<aside id="top-posts-3" class="widget widget_top-posts"><h3 class="widget-title">Top Posts &amp; Pages</h3><ul>				<li>
+										<a href="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/" class="bump-view" data-bump-view="tp">
+						Hostapd : The Linux Way to create Virtual Wifi Access Point					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2013/05/22/using-hostapd-with-dnsmasq-to-create-virtual-wifi-access-point-in-linux/" class="bump-view" data-bump-view="tp">
+						Using Hostapd with dnsmasq to create Virtual Wifi Access Point in Linux					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2013/10/12/ipod-shuffle-4g-under-linux/" class="bump-view" data-bump-view="tp">
+						IPod Shuffle 4g under Linux					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2012/11/26/hostapd-python-client/" class="bump-view" data-bump-view="tp">
+						Hostapd Python Client					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2014/03/23/using-multiple-network-interfaces-simultaneously-under-linux-virtualreal/" class="bump-view" data-bump-view="tp">
+						Using Multiple Network Interfaces simultaneously under Linux (Virtual/Real)					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2012/06/24/nested-x-servers-with-xephyr/" class="bump-view" data-bump-view="tp">
+						Nested X sessions with Xephyr					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2011/11/18/brainfk-an-eight-command-only-esoteric-programming-language/" class="bump-view" data-bump-view="tp">
+						BrainFuck : An eight-command awesome esoteric programming language					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2011/09/04/tutorial-bootable-flash-drives/" class="bump-view" data-bump-view="tp">
+						Bootable flash Drives					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2013/02/17/downgrading-packages-in-arch-linux-the-worst-case-scenario/" class="bump-view" data-bump-view="tp">
+						Downgrading Packages in Arch Linux: The Worst Case Scenario					</a>
+									</li>
+							<li>
+										<a href="https://nims11.wordpress.com/2013/06/19/running-dota-1-on-linux-with-full-customkeys/" class="bump-view" data-bump-view="tp">
+						Running Dota (1) on Linux with full customkeys					</a>
+									</li>
+			</ul></aside><aside id="blog_subscription-3" class="widget widget_blog_subscription"><h3 class="widget-title"><label for="subscribe-field">Email Subscription</label></h3>
+				<form action="https://subscribe.wordpress.com" method="post" accept-charset="utf-8" id="subscribe-blog">
+											<p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
+<p>Join 68 other followers</p>
+						<p><input type="text" name="email" style="width: 95%; padding: 1px 2px" placeholder="Enter your email address" value="" id="subscribe-field"/></p>
+					
+					<p>
+						<input type="hidden" name="action" value="subscribe"/>
+						<input type="hidden" name="blog_id" value="25287782"/>
+						<input type="hidden" name="source" value="https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/"/>
+						<input type="hidden" name="sub-type" value="widget"/>
+						<input type="hidden" name="redirect_fragment" value="blog_subscription-3" />
+						<input type="hidden" id="_wpnonce" name="_wpnonce" value="b5d73905f6" />						<input type="submit" value="Sign me up!" />
+					</p>
+				</form>
+			
+</aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h3 class="widget-title"><a href="https://www.facebook.com/FooBarAndFoobar">Spread</a></h3>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/FooBarAndFoobar" data-width="270"  data-height="340" data-hide-cover="false" data-show-facepile="true" data-show-posts="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/FooBarAndFoobar"><a href="https://www.facebook.com/FooBarAndFoobar">Spread</a></blockquote></div>
+		</div>
+		<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=249643311490&version=v2.3'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+		</aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">nims11</h3>			<div class="textwidget"><a href="mailto:nimeshghelani@gmail.com">
+<img src="https://i1.wp.com/ucblibraries.colorado.edu/askus/images/email50w.png" height="48" width="48" />
+</a>
+<a href="https://github.com/nims11"><img src="https://i1.wp.com/modoboa.org/media/uploads/zinnia/github.png" height="48" width="48" alt="Github" /></a>
+
+<a href="http://stackoverflow.com/users/1320822/nims">
+<img src="https://i1.wp.com/vidaj.com/gfx/stackoverflow.png" width="48" height="48" alt="stack overflow" />
+</a>
+</div>
+		</aside>		</div><!-- #secondary -->
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com.</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<!-- wpcom_wp_footer -->
+<script type='text/javascript' src='//0.gravatar.com/js/gprofiles.js?ver=201637y'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-9e4c69fd9172a1f84a39d37a48b9dfbe">
+	</div>
+	<div class="grofile-hash-map-48e4c5d5bf0e1819be36c85d33ed632b">
+	</div>
+	<div class="grofile-hash-map-294be38dd7b2f5d897817fcc759518de">
+	</div>
+	<div class="grofile-hash-map-e6d138b0eaa0455a42ce1f224995c783">
+	</div>
+	</div>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/nims11.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/nims11.wordpress.com\/wp-login.php?action=logout&_wpnonce=d2e94ad8a4","homeURL":"https:\/\/nims11.wordpress.com\/","postID":"110","gravDefault":"gravatar_default","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"0","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1462457903j'></script>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/nims11.wordpress.com\/2012\/04\/27\/hostapd-the-linux-way-to-create-virtual-wifi-access-point\/":110};
+	</script>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+		<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/akismet-3.0/_inc/form.js?m=1404442431h'></script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJzTLy/QTc7PK0nNK9EvyClNz8wr1i+uzCtJrMjITM/IAeKS1CJMEWP94uSizIISoOIM5/yiVL2sYh19yo1yKioFEonFGUDz7HNtDU2MjIxNjAyNTbIA0Es/9Q=='></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?m=1363304414h&amp;ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<link rel='stylesheet' id='all-css-0' href='https://s2.wp.com/wp-content/mu-plugins/widgets/facebook-likebox/style.css?m=1436472654h' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJxljksOwjAMRC9EakC0XSHOElLTuiROyK/09phFpQo2Y2lm3siwBGU8Z+QMc4IBKxkM72ZOB9hFrqhgy0icwNITE7wKFpw0DxbjViY2tgwSypDxzgmoIga7No74dzFP6KQayh3yIsYqait+WdaVRp3J/0G7N4JPWT2spghp0pF43K5AN3c9Xfpze+y6tp8/kV1Uyg=='></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20160429#ver=20160429' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+		<script>
+			var _comscore = _comscore || [];
+			_comscore.push({
+				c1: "2",
+				c2: "7518284"
+			});
+			(function() {
+				var s = document.createElement("script"),
+					el = document.getElementsByTagName("script")[0];
+				s.async = true;
+				s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+				el.parentNode.insertBefore(s, el);
+			})();
+		</script>
+		<noscript>
+			<p class="robots-nocontent"><img src="https://sb.scorecardresearch.com/p?c1=2&c2=7518284&c3=&c4=&c5=&c6=&c15=&cv=2.0&cj=1" alt="" style="display:none;" width="1" height="1" /></p>
+		</noscript><script src="//stats.wp.com/w.js?54" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'25287782','blog_tz':'5','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'25287782','v':'wpcom','tz':'5','user_id':'0','post':'110','subd':'nims11'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdTdvUG14Q2VDQTR4LlUsLi82dU1mai9BMm5LPytqWkpxbS9HJltCNlVtZ1Eva35dSlN1Uy9SVEZDUTBydF1Ebz1+MXJvVmRTS10lNUJSNFs1bnwzX2wzfGxOPyx0UnZbRU00WUc0bW9VazhyYWIsaFp5Si9NSnpfU1g0RnUuZmJRLnAwVS0xWTJFZWlSW2R4VjFEXVNUeWFXJmFydlhOZHlGcERMRWw4WWRNMWQ4fGpYVj89eGpfNjEwU3BaQ3lMUn5KYVk3MlZObVguXXNhZjJYM3plUUJaczh0aGxkVEh5VS1WVG9BalhiQlt0Q0xNb1RjOTU/T2JpYVtJcUg/MXw9QUMtanFpVWwuRXJ+dQ=='}]);
+_stq.push([ 'clickTrackerInit', '25287782', '110' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></body>
+</html>

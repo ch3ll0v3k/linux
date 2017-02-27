@@ -1,0 +1,21 @@
+// ------------------------------------------------------------------
+// SSH-Client:
+
+ssh-keygen -t rsa -b 4096
+
+// Put pub-key to SSH-Server
+user@host# cat id_rsa.pub | ssh root@192.168.0.21 "cat >> /root/.ssh/authorized_keys"
+
+// ------------------------------------------------------------------
+// SSH-Server:
+
+// This directive is needet if user will be able login as root.
+PermitRootLogin yes
+PubkeyAuthentication yes
+AuthorizedKeysFile /path/to/authorized_keys // "/root/.ssh/authorized_keys"
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+PermitEmptyPasswords no
+UseLogin no
+
+// ------------------------------------------------------------------

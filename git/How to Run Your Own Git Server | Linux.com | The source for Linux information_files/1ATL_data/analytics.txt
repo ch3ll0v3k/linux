@@ -1,0 +1,26 @@
+function piResponse() {
+piSetCookie('visitor_id6342', '775214747', 3650);
+
+if (document.location.protocol != "https:") {
+var analytics_link = "http://" + "go.linuxfoundation.org/analytics?";
+pi.tracker.visitor_id='775214747';
+
+pi.tracker.visitor_id_sign='c040b4e31fb8dcbffb8398073125994649f257b6118fe53063576d509adbb643e7d42daef3fe3260513836530b1c1757766f0a69';
+
+var variables = 'conly=true';
+for (property in pi.tracker) {
+	variables += "&"+property+"="+pi.tracker[property];
+}
+var headID = document.getElementsByTagName("head")[0];
+piScriptObj[piScriptNum] = document.createElement('script');
+piScriptObj[piScriptNum].type = 'text/javascript';
+piScriptObj[piScriptNum].src = analytics_link + variables;
+headID.appendChild(piScriptObj[piScriptNum]);
+piScriptObj[piScriptNum].onload = function() { return; }
+}
+}
+piResponse();
+
+
+
+

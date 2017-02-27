@@ -1,0 +1,32 @@
+
+Self-Signed_Certificate :: https://wiki.debian.org/Self-Signed_Certificate
+=======================================================================
+
+apt-get install apache2 openssl
+
+mkdir -p /etc/ssl/localcerts
+openssl req -new -x509 -days 365 -nodes -out /etc/ssl/localcerts/apache.pem -keyout /etc/ssl/localcerts/apache.key
+chmod 600 /etc/ssl/localcerts/apache*
+
+# enabled mode ssl
+a2enmod ssl
+
+/*
+### /etc/apache2/sites-available/default-ssl
+
+NameVirtualHost *:443
+<VirtualHost *:443>
+SSLEngine On
+SSLCertificateFile /etc/ssl/localcerts/apache.pem
+SSLCertificateKeyFile /etc/ssl/localcerts/apache.key
+*/
+
+# >> /etc/apache2/ports.conf
+
+NameVirtualHost *:443
+Listen 443
+
+# enable newly created site
+a2ensite "default-ssl"
+
+sudo service apache2 restart

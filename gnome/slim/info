@@ -1,0 +1,12 @@
+location /usr/share/slim/themes/debian-joy
+
+ch3ll0v3k@ch3ll:/usr/share/slim/themes/debian-joy$ _l
+total 140K
+drwxr-xr-x 2 root root 4.0K Aug 25 22:16 .
+drwxr-xr-x 7 root root 4.0K Aug 25 22:16 ..
+-rw-r--r-- 1 root root  92K Jun 28  2012 background.png
+-rw-r--r-- 1 root root  801 Jun 28  2012 COPYRIGHT.background
+-rw-r--r-- 1 root root  997 Jun 28  2012 COPYRIGHT.panel
+-rw-r--r-- 1 root root  26K Jun 28  2012 panel.png
+-rw-r--r-- 1 root root 1.1K Jun 28  2012 slim.theme
+

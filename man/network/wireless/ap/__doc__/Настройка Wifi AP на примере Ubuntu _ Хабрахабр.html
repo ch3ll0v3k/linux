@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html><head><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/watch.js" async="" type="text/javascript"></script><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/analytics.js" async=""></script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta content="width=1024" name="viewport">
+    
+    
+    <title>Настройка Wifi AP на примере Ubuntu / Хабрахабр</title>
+    
+    <meta name="yandex-verification" content="67d46b975fa41645"> <!-- яндекс вебмастер - верификация -->
+
+    <meta name="description" content="Этот топик является продолжением Настройка Wifi в Linux при помощи Adhoc на примере Ubuntu. Я не буду описывать настройку раздачи интернета и dhcp т.к. это есть в предыдущем типике. Как и прошлая...">    
+    <meta name="keywords" content="wi-fi, ubuntu, linux, htc hero, access point">
+    
+    	<meta property="fb:app_id" content="444736788986613"> 
+<meta property="og:type" content="article"> 
+<meta property="og:url" content="http://habrahabr.ru/post/89420/"> 
+<meta property="og:title" content="Настройка Wifi AP на примере Ubuntu"> 
+	
+	<meta property="og:image" content="http://habrahabr.ru/i/habralogo.jpg">
+	<link rel="image_src" href="http://habrahabr.ru/i/habralogo.jpg">
+<meta property="og:description" content="Этот топик является продолжением Настройка Wifi в Linux при помощи Adhoc на примере Ubuntu. Я не буду описывать настройку раздачи интернета и dhcp т.к. это есть...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@habrahabr">
+	<meta property="al:ios:url" content="habrahabr://post/89420">
+<meta property="al:ios:app_store_id" content="778613673">
+<meta property="al:ios:app_name" content="Habrahabr">
+<meta property="al:android:url" content="habrahabr://post/89420">
+<meta property="al:android:app_name" content="Habrahabr">
+<meta property="al:android:package" content="ru.habrahabr">
+<meta property="al:windows_phone:url" content="habrahabr://post/89420">
+<meta property="al:windows_phone:app_name" content="Habrahabr">
+<meta property="al:windows_phone:app_id" content="460a6bd6-8955-470f-935e-9ea1726a6060">
+	<link rel="canonical" href="http://habrahabr.ru/post/89420/">
+
+
+
+    <link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/global_main.css" rel="stylesheet" media="all">
+    <script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/global_main.js"></script>
+      <link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/post_common_css.css" rel="stylesheet" media="all">
+
+    <link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/printer.css" rel="stylesheet" media="print">
+
+    
+    
+
+    
+
+
+      <script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/post_common_js.js"></script>
+
+
+      <!-- www.criteo.com/ru -->
+<script type="text/javascript">
+  var crtg_nid="2580";
+  var crtg_cookiename="cto_rtt";
+  var crtg_varname="crtg_content";
+  function crtg_getCookie(c_name){
+    var i,x,y,ARRCookies=document.cookie.split(";");
+    for(i=0;i<ARRCookies.length;i++){
+      x=ARRCookies[i].substr(0,ARRCookies[i].indexOf("="));
+      y=ARRCookies[i].substr(ARRCookies[i].indexOf("=")+1);
+      x=x.replace(/^\s+|\s+$/g,"");
+      if(x==c_name){return unescape(y);}
+    }
+    return'';
+  }
+  var crtg_content = crtg_getCookie(crtg_cookiename);var crtg_rnd=Math.floor(Math.random()*99999999999);
+  var crtg_url=location.protocol+'//rtax.criteo.com/delivery/rta/rta.js?netId='+escape(crtg_nid);crtg_url+='&cookieName='+escape(crtg_cookiename);crtg_url+='&rnd='+crtg_rnd;crtg_url+='&varName=' + escape(crtg_varname);
+  var crtg_script=document.createElement('script');crtg_script.type='text/javascript';crtg_script.src=crtg_url;crtg_script.async=true;
+  if(document.getElementsByTagName("head").length>0)document.getElementsByTagName("head")[0].appendChild(crtg_script);
+  else
+  if(document.getElementsByTagName("body").length>0)document.getElementsByTagName("body")[0].appendChild(crtg_script);
+</script><script async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/rta.js" type="text/javascript"></script>
+      <script>
+        var N = 5;
+        var ar_duo1 = Math.floor(Math.random()*N+1);
+      </script>
+      <script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/adriver.js"></script>
+
+    <link title="Хабрахабр / Комментарии к публикации «Настройка Wifi AP на примере Ubuntu»" type="application/rss+xml" rel="alternate" href="http://habrahabr.ru/rss/post/89420/">
+    
+    
+<script type="text/javascript">
+
+    var user_type = "guest";
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-726094-1',  'auto' ); 
+
+  ga('require', 'displayfeatures');
+  ga('set', 'dimension1', user_type); // user type - guest/readonly/habrauser
+  //ga('set', 'dimension2', username); // username
+
+
+  ga('send', 'pageview');
+  
+</script>
+
+
+<!-- adriver counter //-->
+</head><body><style type="text/css">#navbar .nav_panel .tab.tab_print:hover path,#navbar .nav_panel .tab.tab_print:hover text { fill: #c62b45; } </style><span style="position:absolute;left:-9999px;">
+  <img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/rle.asc" alt="" height="1" width="1">
+</span>
+<!-- adriver counter end //-->
+
+
+
+
+
+
+
+
+    <meta content="Хабрахабр" name="apple-mobile-web-app-title">
+<link href="http://habrahabr.ru/images/apple-touch-icon_142x142.png" rel="apple-touch-icon" type="image/png">
+  
+
+  
+    <div id="TMpanel">
+  <div class="container">
+    <div class="menu">
+      <a href="http://habrahabr.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_top_panel&amp;utm_campaign=tm_promo" class="current">Хабрахабр</a>
+      <a href="http://geektimes.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_top_panel&amp;utm_campaign=tm_promo">Geektimes</a>
+      <a href="http://toster.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_top_panel&amp;utm_campaign=tm_promo">Тостер</a>
+      <a href="http://brainstorage.me/?utm_source=tm_habrahabr&amp;utm_medium=tm_top_panel&amp;utm_campaign=tm_promo">Brainstorage</a>
+      <a href="http://freelansim.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_top_panel&amp;utm_campaign=tm_promo">Фрилансим</a>
+      <a href="http://habrastorage.org/?utm_source=tm_habrahabr&amp;utm_medium=tm_top_panel&amp;utm_campaign=tm_promo">Habrastorage</a>
+    </div>
+    <div class="menu special"><a href="http://ad.adriver.ru/cgi-bin/click.cgi?sid=1&amp;ad=470958&amp;bt=21&amp;pid=1785447&amp;bid=3593592&amp;bn=3593592&amp;rnd=1051352132" target="_blank" style="color: black">Выиграй Lumia</a><a href="http://ad.adriver.ru/cgi-bin/click.cgi?sid=1&amp;ad=482836&amp;bt=21&amp;pid=1727881&amp;bid=3622542&amp;bn=3622542&amp;rnd=1014708502" target="_blank" style="color: red">Azure бесплатно</a></div>
+  </div>
+</div>
+
+
+    <div id="layout">
+      <div id="navbar_overlay" class="hidden"></div>
+<div class="fixed" style="bottom: 0px;" id="navbar">
+    <div class="nav_panel">
+        <a href="http://habrahabr.ru/" class="logo"></a>
+
+            <a href="http://habrahabr.ru/posts/" class="tab tab_menu" data-tab="menu_tab" title="Меню"><span class="g-icon g-icon-burger"></span></a>
+            <a href="https://habrahabr.ru/auth/login/" class="tab tab_login" id="login" title="Войти"><span class="g-icon g-icon-lock"></span></a>
+
+        <a href="http://ad.adriver.ru/cgi-bin/click.cgi?sid=1&amp;ad=500505&amp;bt=21&amp;pid=1833154&amp;bid=3677014&amp;bn=3677014&amp;rnd=1367068122" class="tab tab_print" id="print_tab" target="_blank" data-post-id="89420"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 571 571" enable-background="new 0 0 571 571" xml:space="preserve">
+<g>
+	<path fill="#C1C1C1" d="M285.5,68c-88.2,0-159.6,71.4-159.6,159.6s71.4,159.6,159.6,159.6s159.6-71.4,159.6-159.6
+		S373.7,68,285.5,68z M285.5,352.6c-69,0-124.9-55.9-124.9-125c0-69,55.9-125,124.9-125s125,55.9,125,125
+		C410.5,296.6,354.5,352.6,285.5,352.6z"></path>
+	<circle fill="#C1C1C1" cx="241.2" cy="188.5" r="23.5"></circle>
+	<path fill="#C1C1C1" d="M360.5,255c-7.3-4.5-16.9-2.2-21.4,5.2c-9.4,15.3-29.4,25.3-50.9,25.3s-41.5-10-50.9-25.3
+		c-4.5-7.3-14.1-9.7-21.4-5.2c-7.3,4.5-9.7,14.1-5.2,21.4c15.2,24.8,44.9,40.2,77.5,40.2s62.3-15.4,77.5-40.2
+		C370.2,269.1,367.8,259.5,360.5,255z"></path>
+	<path fill="#C1C1C1" d="M311.9,202.9h33.6c7.7,0,13.8-6.2,13.8-13.8s-6.2-13.8-13.8-13.8h-33.6c-7.7,0-13.8,6.2-13.8,13.8
+		S304.2,202.9,311.9,202.9z"></path>
+	<path fill="#C1C1C1" d="M183.5,487.6c-2,1.4-4.7,2.4-8,3.1c-3.3,0.6-6.7,1-10.2,1c-4.1,0-8-0.6-11.8-1.8s-7.1-3.2-10-5.9
+		c-2.9-2.7-5.2-6.1-6.9-10.3c-1.7-4.2-2.6-9.3-2.6-15.3c0-6.2,1-11.4,2.9-15.7c2-4.2,4.4-7.6,7.5-10.2c3-2.6,6.4-4.5,10.1-5.6
+		c3.7-1.2,7.4-1.7,11-1.7c4,0,7.3,0.2,10,0.7s5,1.1,6.7,1.7l-2.7,11.3c-1.5-0.7-3.3-1.2-5.3-1.5s-4.6-0.5-7.7-0.5
+		c-2.7,0-5.2,0.4-7.5,1.3c-2.2,0.9-4.1,2.2-5.7,4c-1.6,1.8-2.8,4-3.7,6.7s-1.3,5.8-1.3,9.4c0,3.2,0.4,6.1,1.2,8.7s2,4.9,3.6,6.8
+		s3.6,3.4,6,4.4s5.3,1.6,8.5,1.6c3,0,5.5-0.3,7.5-0.8s3.9-1.2,5.4-2.1L183.5,487.6z"></path>
+	<path fill="#C1C1C1" d="M223,476.8h-21.6l-5.2,13.6h-13.5l25.1-64.5h10l25.1,64.5h-14.4L223,476.8z M205.1,466.1h14.6l-4.9-13.4
+		l-2.2-10.2h-0.5l-2.2,10.2L205.1,466.1z"></path>
+	<path fill="#C1C1C1" d="M266.9,457l-5.5-9.6H261l1.5,9.7v33.3h-12.8v-64.5h9.8l26.4,34.1l5.2,9.3h0.5l-1.5-9.4v-33.6H303v64.5h-9.8
+		L266.9,457z"></path>
+	<path fill="#C1C1C1" d="M313.5,458.4c0-5.2,0.7-9.9,2-14.1c1.3-4.1,3.3-7.6,5.8-10.5c2.5-2.8,5.6-5,9.3-6.5
+		c3.7-1.5,7.8-2.2,12.4-2.2c4.9,0,9.2,0.8,12.9,2.4c3.7,1.6,6.8,3.9,9.2,6.8c2.5,2.9,4.3,6.4,5.6,10.5c1.2,4.1,1.9,8.6,1.9,13.5
+		c0,5.2-0.7,9.9-2.1,14.1c-1.4,4.1-3.3,7.6-5.9,10.5c-2.6,2.8-5.7,5-9.3,6.5c-3.7,1.5-7.8,2.2-12.3,2.2c-4.9,0-9.3-0.8-12.9-2.4
+		c-3.7-1.6-6.8-3.9-9.2-6.8c-2.5-2.9-4.3-6.4-5.5-10.5C314.1,467.8,313.5,463.3,313.5,458.4z M327.8,458.4c0,3.2,0.3,6.1,0.9,8.7
+		s1.5,4.9,2.7,6.8s2.8,3.4,4.7,4.4c1.9,1,4.2,1.6,6.8,1.6c4.8,0,8.6-1.6,11.2-4.9c2.7-3.3,4-8.8,4-16.5c0-3-0.3-5.9-0.8-8.5
+		s-1.4-4.9-2.7-6.8c-1.2-1.9-2.8-3.4-4.8-4.5c-1.9-1.1-4.3-1.6-7-1.6c-4.8,0-8.5,1.7-11.2,5.1C329.2,445.5,327.8,450.9,327.8,458.4z
+		"></path>
+	<path fill="#C1C1C1" d="M400.4,457l-5.5-9.6h-0.5l1.5,9.7v33.3h-12.8v-64.5h9.8l26.4,34.1l5.2,9.3h0.5l-1.5-9.4v-33.6h12.8v64.5
+		h-9.8L400.4,457z"></path>
+</g>
+</svg></a>
+
+        <a href="#" class="scroll_to_up scroll_to_up_for_guest" id="scroll_to_top" title="Наверх"></a>
+    </div>
+    <div class="nav_tabs_content ">
+
+        <div class="nav_tab hidden" id="menu_tab">
+            <div class="title">Разделы</div>
+            <form action="/search/" method="get" class="global_search_form">
+                <div>
+                    <input name="q" placeholder="Поиск" type="text">
+                </div>
+            </form>
+            <div class="menu">
+                <a href="http://habrahabr.ru/posts/top/">Публикации</a>
+                <a href="http://habrahabr.ru/hubs/">Хабы</a>
+                <a href="http://habrahabr.ru/companies/">Компании</a>
+                <a href="http://habrahabr.ru/users/">Пользователи</a>
+                <a href="http://toster.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_menu&amp;utm_campaign=tm_promo" class="new_window">Q&amp;A</a>
+                <a href="http://habrahabr.ru/sandbox/">Песочница</a>
+                <a href="http://habrahabr.ru/exchange/">Биржа авторов</a>
+
+
+
+            </div>
+
+            
+
+                    <div class="line"></div>
+                    <div class="title">Спецпроекты</div>
+                    <div class="menu">
+
+                    <a href="http://habrahabr.ru/lnk/109/" target="_blank">Простое SEO</a>
+
+                    <a href="http://habrahabr.ru/lnk/123/" target="_blank">Дарите улыбки</a>
+
+                    <a href="http://habrahabr.ru/lnk/135/" target="_blank">PAYEER переводы</a>
+                    </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+      <div class="inner">
+        
+                
+        
+
+          <div class="content_left">
+  	
+
+
+
+
+
+    <div class="post_show">
+  	  
+  <div class="post shortcuts_item" id="post_89420">
+  	<div class="published">30 марта 2010 в 19:38</div>
+    <h1 class="title">
+	    
+        <span class="post_title">Настройка Wifi AP на примере Ubuntu</span>
+      
+			
+  	</h1>
+  	
+  	<div class="hubs">
+		<a href="http://habrahabr.ru/hub/linux/" class="hub " title="Вы не подписаны на этот хаб">Настройка Linux</a><span class="profiled_hub" title="Профильный хаб">*</span>
+</div>
+
+  	
+  	<div class="content html_format">
+    	Этот топик является продолжением <a href="http://habrahabr.ru/blogs/linux/88281/">Настройка Wifi в Linux при помощи Adhoc на примере Ubuntu</a>.
+ Я не буду описывать настройку раздачи интернета и dhcp т.к. это есть в 
+предыдущем типике. Как и прошлая статья, эта будет нацелена на новичка. 
+Благодаря покупке HTC Hero, я был вынужден настроить WIFI на режим AP, 
+ибо оказалось, что Hero Adhoc изначально не поддерживает.(Кстати HTC 
+Hero подключился, но интеренет не работает надеюсь в новой прошивке это 
+решится)<br>
+К сожалению в моем Dlink DWA-110 нет AP, зато есть SoftAP. Его то мы и настроим.<br>
+<a name="habracut"></a><br>
+Для работы необходимо ядро 2.6.30 или новее.<br>
+Нам понадобится запустить терминал и перейти в режим суперпользователя командой sudo su<br>
+Установим требующиеся пакеты:<br>
+<code>sudo apt-get install binutils hostapd libnl1 wireless-tools libiw29</code><br>
+Сделаем бекап стандартной конфигурации<br>
+<code>sudo mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd-bak.conf</code><br>
+Узнаем наш интерфейс Wifi<br>
+<code>ifconfig</code><br>
+Появится что то вроде<br>
+<code>eth0 Link encap:Ethernet<br>
+ inet addr:192.168.1.2 Bcast:192.168.1.255 Mask:255.255.255.0<br>
+ UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1<br>
+ RX packets:77068 errors:0 dropped:0 overruns:0 frame:0<br>
+ TX packets:55746 errors:0 dropped:0 overruns:0 carrier:0<br>
+ collisions:0 txqueuelen:1000 <br>
+ RX bytes:90178476 (90.1 MB) TX bytes:7529014 (7.5 MB)<br>
+ Interrupt:31 Base address:0xc000 <br>
+<br>
+lo Link encap:Локальная петля (Loopback) <br>
+ inet addr:127.0.0.1 Mask:255.0.0.0<br>
+ inet6 addr: ::1/128 Scope:Host<br>
+ UP LOOPBACK RUNNING MTU:16436 Metric:1<br>
+ RX packets:107457 errors:0 dropped:0 overruns:0 frame:0<br>
+ TX packets:107457 errors:0 dropped:0 overruns:0 carrier:0<br>
+ collisions:0 txqueuelen:0 <br>
+ RX bytes:32888450 (32.8 MB) TX bytes:32888450 (32.8 MB)<br>
+<br>
+wlan0 Link encap:Ethernet<br>
+ inet addr:10.42.43.1 Bcast:10.42.43.255 Mask:255.255.255.0<br>
+ UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1<br>
+ RX packets:6611 errors:0 dropped:0 overruns:0 frame:0<br>
+ TX packets:11693 errors:0 dropped:0 overruns:0 carrier:0<br>
+ collisions:0 txqueuelen:1000 <br>
+ RX bytes:755281 (755.2 KB) TX bytes:13857215 (13.8 MB)<br>
+</code><br>
+Wlan нам и нужен.<br>
+Запишем наши настройки<br>
+<code>sudo gedit /etc/hostapd/hostapd.conf</code><br>
+Откроется окно Gedit введите<br>
+<code>interface=wlan0<br>
+driver=nl80211<br>
+ssid=APnet<br>
+country_code=RU<br>
+hw_mode=g<br>
+channel=11<br>
+<br>
+macaddr_acl=0<br>
+<br>
+wpa=3<br>
+wpa_key_mgmt=WPA-PSK<br>
+wpa_passphrase=password<br>
+wpa_pairwise=TKIP CCMP</code><br>
+Не забудьте заменить интерфейс, ssid и пароль на свои.<br>
+У себя я вообще выключил шифрование.<br>
+<code>sudo gedit /etc/default/hostapd</code><br>
+Разкомментирует строки<br>
+<code>RUN_DAEMON="yes"<br>
+DAEMON_CONF="/etc/hostapd/hostapd.conf"</code><br>
+Запустим демон<br>
+<code>sudo service hostapd start</code><br>
+Все настройка закончена. Теперь у вас есть своя домашняя точка доступа. 
+    	<div class="clear"></div> 	
+  	</div>
+    
+<ul class="tags">
+	<li><a href="http://habrahabr.ru/search/?q=%5Bwi-fi%5D&amp;target_type=posts" rel="tag">wi-fi</a></li><li>, <a href="http://habrahabr.ru/search/?q=%5Bubuntu%5D&amp;target_type=posts" rel="tag">ubuntu</a></li><li>, <a href="http://habrahabr.ru/search/?q=%5Blinux%5D&amp;target_type=posts" rel="tag">linux</a></li><li>, <a href="http://habrahabr.ru/search/?q=%5Bhtc%20hero%5D&amp;target_type=posts" rel="tag">htc hero</a></li><li>, <a href="http://habrahabr.ru/search/?q=%5Baccess%20point%5D&amp;target_type=posts" rel="tag">access point</a></li>
+</ul>
+
+    <div class="infopanel_wrapper">
+	<div class="infopanel " id="infopanel_post_89420">
+	
+				<div class="voting   ">
+	
+						<span class="plus" title="Голосовать могут только зарегистрированные пользователи."></span>
+	
+					<div class="mark positive ">
+							<span class="score" title="Всего 15: ↑10 и ↓5">+5</span>
+					</div>
+					
+						<span class="minus" title="Голосовать могут только зарегистрированные пользователи."></span>
+		
+				</div>
+	
+		<div class="pageviews" title="Просмотры публикации">31724</div>
+			
+		<div class="favorite">
+				<a class="guest" href="#" onclick="return false;" title="Только зарегистрированные пользователи могут добавлять посты в избранное"></a>
+		</div>
+		<div class="favs_count" title="Количество пользователей, добавивших пост в избранное">75</div>
+		
+		
+		
+	
+	
+	
+	
+				<div class="author">
+					<a title="Автор текста" href="http://habrahabr.ru/users/BupycNet/">BupycNet</a>
+					<span class="rating" title="рейтинг пользователя">0,0</span>
+						<a href="https://plus.google.com/111720121121032631321/?rel=author" class="googleplus_profile">G+</a>
+				</div>
+		
+	
+	
+		
+			<div class="share">
+				<div class="twitter">
+					<a href="http://twitter.com/intent/tweet?text=%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0+Wifi+AP+%D0%BD%D0%B0+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5+Ubuntu+http://habr.ru/p/89420/+via+%40habrahabr+%23habr" title="Опубликовать ссылку в Twitter" target="_blank"></a>
+				</div>
+				<div class="vkontakte">
+					<a href="http://vk.com/share.php?url=http://habrahabr.ru/post/89420/" title="Опубликовать ссылку во ВКонтакте" onclick="window.open(this.href, 'Опубликовать ссылку во Вконтакте', 'width=800,height=300'); return false"></a>
+				</div>
+				<div class="facebook">
+					<a href="https://www.facebook.com/sharer/sharer.php?u=http://habrahabr.ru/post/89420/" title="Опубликовать ссылку в Facebook" onclick="window.open(this.href, 'Опубликовать ссылку в Facebook', 'width=640,height=436,toolbar=0,status=0'); return false"></a>
+				</div>
+				<div class="googleplus">
+					<a href="https://plus.google.com/share?url=http://habrahabr.ru/post/89420/" title="Опубликовать ссылку в Google Plus" onclick="window.open(this.href, 'Опубликовать ссылку в Google Plus', 'width=800,height=300'); return false"></a>
+				</div>
+			</div>
+	
+	</div>
+	<div class="clear"></div>
+</div>
+
+
+
+
+    
+    
+	</div>
+
+    </div>
+
+  	    
+  <div title="" id="adriver_banner_132032996"><style type="text/css">
+    .post_inner_banner.momondo1_inner_banner { display:block;overflow:hidden;text-align:center;height:71px;border:1px solid #d4d4d4;border-radius:15px;background:url(http://special.habrahabr.ru/img/1419930280/htmlblock/momondo/left1.png) no-repeat; }
+    .post_inner_banner.momondo1_inner_banner a { display:block; overflow: hidden; }
+    .post_inner_banner.momondo1_inner_banner div { display:block;float:left;text-align:left; }
+    .post_inner_banner.momondo1_inner_banner .momondo1_center { width:52px;height:71px;background:url(http://special.habrahabr.ru/img/1419930280/htmlblock/momondo/center.png) no-repeat center 13px;}
+    .post_inner_banner.momondo1_inner_banner .slogan { margin: 0 37px 0 361px;padding-top:11px;color:#000;font-weight: bold;font-size:16px;line-height:24px;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+    .post_inner_banner.momondo1_inner_banner .slogan .momondo1_blue {color: #4bc0e4;}
+    .post_inner_banner.momondo1_inner_banner .rright { margin: 11px 0 0 26px;width:163px;height:23px;color:#000;font-size:16px;line-height:24px; }
+
+    @media (max-width: 1320px) {
+        .post_inner_banner.momondo1_inner_banner { background-position: -110px 0; }
+        .post_inner_banner.momondo1_inner_banner .slogan { margin-left: 280px; }
+    }
+    @media (max-width: 1220px) {
+        .post_inner_banner.momondo1_inner_banner { background-position: -200px 0; }
+        .post_inner_banner.momondo1_inner_banner .slogan { margin-left: 180px; }
+    }
+    @media (max-width: 1100px) {
+        .post_inner_banner.momondo1_inner_banner { background-position: -250px 0; }
+        .post_inner_banner.momondo1_inner_banner .slogan { margin-left: 120px;margin-right: 30px; }
+         .post_inner_banner.momondo1_inner_banner .rright { margin-left: 26px; }
+    }
+</style>
+<div class="momondo1_inner_banner post_inner_banner">
+    <a href="http://ad.adriver.ru/cgi-bin/click.cgi?sid=1&amp;ad=501706&amp;bt=21&amp;pid=1842132&amp;bid=3686331&amp;bn=3686331&amp;rnd=1584082089" target="_blank" class="block_url">
+        <div class="slogan">
+            Куда вам стоит<br><span class="momondo1_blue">переехать на зиму?</span>
+        </div>
+        <div class="momondo1_center"></div>
+        <div class="rright">Истории от тех,<br>кто это уже сделал</div>
+    </a>
+</div></div>  
+
+  <script type="text/javascript">
+      /** Для блоков гугла **/
+      function requireAdsafe(file){
+          var head = document.getElementsByTagName("head")[0];
+          var script = document.createElement('script');
+          script.src = file;
+          script.type = 'text/javascript';
+          head.appendChild(script);
+      }
+
+      function show_inner_banner_block(name, url){
+          if( typeof(name) !== 'undefined'){
+              //$.get('/html/'+name+'/1419945689/', function(html){
+              $.get('http://special.habrahabr.ru/api/htmlblock/'+name+'/', function(html){
+                  $('#adriver_banner_132032996').html(html);
+                  $('.'+name+'_inner_banner').removeClass('hidden');
+                  if( typeof(url) !== 'undefined'){
+                      $('.'+name+'_inner_banner .block_url').attr('href', url);
+                  }
+              }, 'html')
+          }
+      }
+
+        $(function(){
+          var check_scroll_position = function() {
+            var height = $(window).height();
+            var scrollTop = $(window).scrollTop();
+            var scrollBottom = $(window).scrollTop() + height;
+            var blockTop = $('#adriver_banner_132032996').position().top;
+            var show = scrollTop < blockTop && blockTop < scrollBottom;
+            
+            if( show ){
+                $( window ).off('scroll', check_scroll_position);
+                $( window ).trigger('show_bn3');
+            }
+          };
+          //$( window ).on('scroll', check_scroll_position);
+          
+          $( window ).on('show_bn3', function(){
+            var keyword = '';
+            if (typeof crtg_content !== 'undefined' && crtg_content) { keyword = crtg_content; }
+            var custom = { 4:ar_duo1 };
+                custom[1] = 'linux';
+
+            //if (true)
+            //    show_inner_banner_block('raiffaizen2');
+            //else
+                new adriver("adriver_banner_132032996", {sid: 176776, bt: 52, bn: 3, custom: custom, keyword: keyword});
+          });      
+
+          $( window ).trigger('show_bn3');          
+        });
+    </script>
+    
+
+
+  	
+      
+      <div class="block_after_post">
+        
+
+
+<div class="block similar_posts">
+
+    <div class="title">Похожие публикации</div>
+    <div class="posts_list">
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/233285/">Новая технология «Wi-Fi backscatter» позволяет создавать модули связи, которым не нужно активное питание</a>
+            <span class="when">14 августа 2014 в 08:56</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/224955/">Wi-Fi сети: проникновение и защита. 1) Матчасть</a>
+            <span class="when"> 2 июня 2014 в 19:16</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/201254/">Бесплатный Wi-Fi в московском метро. Еще раз</a>
+            <span class="when"> 7 ноября 2013 в 16:49</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/199526/">iON Air Pro 2 Wi-Fi: флагманская «подводная» камера – нюансы и особенности</a>
+            <span class="when">31 октября 2013 в 16:12</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/199508/">IEEE 802.11s Wi-Fi Mesh для самых маленьких часть первая</a>
+            <span class="when">31 октября 2013 в 14:37</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/198428/">Карта Mesh Wi-Fi: А давайте построим свою Mesh сеть в России и СНГ</a>
+            <span class="when">27 октября 2013 в 21:56</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/168839/">Эксплуатируем уязвимости роутеров wi-fi с android-устройства</a>
+            <span class="when">10 февраля 2013 в 16:42</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/168305/">Бесплатного wi-fi в московском метро пока не будет</a>
+            <span class="when"> 5 февраля 2013 в 03:00</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/164959/">Гигабитный Wi-Fi (802.11ac) готов к массовому рынку</a>
+            <span class="when"> 7 января 2013 в 11:11</span>
+        </div>
+        <div class="post_item">
+            <a class="post_name" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'similar_posts', $(this).parents('.similar_posts').hasClass('float_block') ? 'float' : 'common'); }" href="http://habrahabr.ru/post/155203/">Wi-Fi в любительском проекте? Нет ничего проще!</a>
+            <span class="when">18 октября 2012 в 12:05</span>
+        </div>
+    </div>
+</div>
+
+
+
+      </div>
+
+  		<div class="comments_list " id="comments">
+
+  <h2 class="title ">Комментарии (<span id="comments_count">14</span>)
+  
+  
+  </h2>
+
+    <div class="comment_item" id="comment_2685414">
+
+    <span class="parent_id" data-parent_id="0"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2685414">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2685414" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark positive ">
+                    <span class="score" title="Всего 1: ↑1 и ↓0">+1</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/aim/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/d5a291803a212dcb2bfa144c601baa9d_small.png" alt=""></a>
+            <a href="http://habrahabr.ru/users/aim/" class="username">aim</a>
+            <time>30 марта 2010 в 19:53</time>
+
+            <a href="#comment_2685414" class="link_to_comment">#</a>
+            
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            правильно ли я понимаю что hostapd будет работать на 
+абсолютно любой wifi карточке и ему пофигу на те возможности, которые в 
+ней в «железе» реализованы?
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2685414">
+        <div class="comment_item" id="comment_2685424">
+
+    <span class="parent_id" data-parent_id="2685414"></span>
+    <div class="comment_body ">
+        <div class="info  is_topic_starter  " rel="2685424">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2685424" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 2: ↑1 и ↓1">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/41a8d8ec7fe474d3565549ccd61f9931_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="username">BupycNet</a>
+            <time>30 марта 2010 в 19:56</time>
+
+            <a href="#comment_2685424" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="2685424" data-parent_id="2685414" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_2685414" data-id="2685424" data-parent_id="2685414" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            Нет, карточка должна поддерживать либо AP, либо SoftAP, но 
+бывают случаи, когда поддержки нет официально, но чип поддерживает. Так 
+что стоит попробовать.
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2685424">
+        <div class="comment_item" id="comment_2686678">
+
+    <span class="parent_id" data-parent_id="2685424"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2686678">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2686678" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/dr_magnus/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/5fc40b014e6674e0468392b718f0f1f4_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/dr_magnus/" class="username">dr_magnus</a>
+            <time>31 марта 2010 в 01:20</time>
+
+            <a href="#comment_2686678" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="2686678" data-parent_id="2685424" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_2685424" data-id="2686678" data-parent_id="2685424" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            а за что минус влепили? мне вот тоже интересно, какую 
+карточку взять, что бы можно было в машинку воткнуть и инет через вайфай
+ на ноут раздать. в магазинах обычно прыщавые юноши либо плечами 
+пожимают на вопрос «можно ли карточку как АР использовать?» либо 
+начинают впаривать полноценные АР-маршрутизаторы, которые мне вообще ни к
+ чему.<br>
+как правильно подобрать карту для организации АР?
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2686678">
+        <div class="comment_item" id="comment_2694455">
+
+    <span class="parent_id" data-parent_id="2686678"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2694455">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2694455" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark positive ">
+                    <span class="score" title="Всего 1: ↑1 и ↓0">+1</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/cenobyte/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/stub-user-small.gif" alt=""></a>
+            <a href="http://habrahabr.ru/users/cenobyte/" class="username">cenobyte</a>
+            <time> 2 апреля 2010 в 02:08</time>
+
+            <a href="#comment_2694455" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="2694455" data-parent_id="2686678" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_2686678" data-id="2694455" data-parent_id="2686678" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            Смотрите поддержку AP в соответствующих <a href="http://wireless.kernel.org/en/users/Drivers">драйверах</a>.
+ Что заработает с hostapd 100% — это карточки с чипсетом Atheros (как 
+узнать какой чипсет — точного рецепта нет, некоторые производители это 
+пишут у себя на сайте, иногда это можно понять скачав драйвера и 
+посмотрев на них внимательно). Правда для 802.11g-карточек рекомендую 
+ставить не стандартный ath5k, включенный в ядро, а полупроприетарный 
+madwifi, если есть возможность. А для ath9k отключать в hostapd 
+802.11n-режим. Если используете свои свежие ядра, которые компилируете 
+лично, то советы не для вас, естественно.
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2694455">
+        <div class="comment_item" id="comment_5132264">
+
+    <span class="parent_id" data-parent_id="2694455"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="5132264">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_5132264" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/izharskiy/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/stub-user-small.gif" alt=""></a>
+            <a href="http://habrahabr.ru/users/izharskiy/" class="username">izharskiy</a>
+            <time>13 сентября 2012 в 02:40</time>
+
+            <a href="#comment_5132264" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="5132264" data-parent_id="2694455" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_2694455" data-id="5132264" data-parent_id="2694455" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            &gt; для ath9k отключать в hostapd 802.11n-режим<br>
+<br>
+зачем?
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_5132264">
+        <div class="comment_item" id="comment_5132267">
+
+    <span class="parent_id" data-parent_id="5132264"></span>
+    <div class="comment_body ">
+        <div class="info  is_topic_starter  " rel="5132267">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_5132267" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/41a8d8ec7fe474d3565549ccd61f9931_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="username">BupycNet</a>
+            <time>13 сентября 2012 в 02:42</time>
+
+            <a href="#comment_5132267" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="5132267" data-parent_id="5132264" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_5132264" data-id="5132267" data-parent_id="5132264" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            Насколько я помню бывают баги при работе.
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_5132267">
+    </div>
+</div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+        <div class="comment_item" id="comment_2687070">
+
+    <span class="parent_id" data-parent_id="2685414"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2687070">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2687070" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/ArtyV/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/ac707ef0476d721b53b3e7c6403683ba_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/ArtyV/" class="username">ArtyV</a>
+            <time>31 марта 2010 в 08:25</time>
+
+            <a href="#comment_2687070" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="2687070" data-parent_id="2685414" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_2685414" data-id="2687070" data-parent_id="2685414" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            Заводится много на чём, в некоторых случаях надо будет поколдовать
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2687070">
+    </div>
+</div>
+
+    </div>
+</div>
+
+    <div class="comment_item" id="comment_2685515">
+
+    <span class="parent_id" data-parent_id="0"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2685515">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2685515" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/bondbig/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/d0d8a9bea318057232b4e1dc74fcca3d_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/bondbig/" class="username">bondbig</a>
+            <time>30 марта 2010 в 20:18</time>
+
+            <a href="#comment_2685515" class="link_to_comment">#</a>
+            
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            загадочный тег «htc hero»
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2685515">
+        <div class="comment_item" id="comment_2685561">
+
+    <span class="parent_id" data-parent_id="2685515"></span>
+    <div class="comment_body ">
+        <div class="info  is_topic_starter  " rel="2685561">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2685561" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark positive ">
+                    <span class="score" title="Всего 1: ↑1 и ↓0">+1</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/41a8d8ec7fe474d3565549ccd61f9931_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="username">BupycNet</a>
+            <time>30 марта 2010 в 20:29</time>
+
+            <a href="#comment_2685561" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="2685561" data-parent_id="2685515" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_2685515" data-id="2685561" data-parent_id="2685515" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            Просто долго ломал голову почему на нем не работает. Это 
+чтобы такой же как и я сразу смог зайти и увидеть как сделать на нем 
+интернет
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2685561">
+    </div>
+</div>
+
+    </div>
+</div>
+
+    <div class="comment_item" id="comment_2685770">
+
+    <span class="parent_id" data-parent_id="0"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2685770">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2685770" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/Ierixon/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/8d3465c097079e0786e4c1fec5eeac44_small.png" alt=""></a>
+            <a href="http://habrahabr.ru/users/Ierixon/" class="username">Ierixon</a>
+            <time>30 марта 2010 в 21:36</time>
+
+            <a href="#comment_2685770" class="link_to_comment">#</a>
+            
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            лучше использовать iwconfig, ибо интерфейс может и не wlan называться.
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2685770">
+    </div>
+</div>
+
+    <div class="comment_item" id="comment_2685778">
+
+    <span class="parent_id" data-parent_id="0"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2685778">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2685778" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/kAIST/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/c00c17e66e50372e11512a079b3042a3_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/kAIST/" class="username">kAIST</a>
+            <time>30 марта 2010 в 21:39</time>
+
+            <a href="#comment_2685778" class="link_to_comment">#</a>
+            
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            О_о хабр угадывает что мне нужно :)<br>
+Сейчас как раз собрался расшаривать интернет по wi fi на убунте, с точно таким же wifi брелком 
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2685778">
+    </div>
+</div>
+
+    <div class="comment_item" id="comment_2685812">
+
+    <span class="parent_id" data-parent_id="0"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2685812">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2685812" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/kAIST/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/c00c17e66e50372e11512a079b3042a3_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/kAIST/" class="username">kAIST</a>
+            <time>30 марта 2010 в 21:47</time>
+
+            <a href="#comment_2685812" class="link_to_comment">#</a>
+            
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            не подскажите в чем может быть проблема?<br>
+Создаю сеть через аплет, и сразу пропадает интернет на eth0, который получает его с роутера.
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2685812">
+        <div class="comment_item" id="comment_2686143">
+
+    <span class="parent_id" data-parent_id="2685812"></span>
+    <div class="comment_body ">
+        <div class="info  is_topic_starter  " rel="2686143">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2686143" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark  ">
+                    <span class="score" title="Всего 0: ↑0 и ↓0">0</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/41a8d8ec7fe474d3565549ccd61f9931_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/BupycNet/" class="username">BupycNet</a>
+            <time>30 марта 2010 в 23:03</time>
+
+            <a href="#comment_2686143" class="link_to_comment">#</a>
+            
+                <div class="show_tree" data-id="2686143" data-parent_id="2685812" title="Показать ветку комментариев">↵</div>
+                <a href="#comment_2685812" data-id="2686143" data-parent_id="2685812" class="to_parent">↑</a>
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            в прошлой статье я написал команды для расшаривания интернета — похоже ты ввел там wlan0 вот и инет идет через него.<br>
+Посмотри статью ту.<br>
+А в этой настройка идет вовсе без апплета.
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2686143">
+    </div>
+</div>
+
+    </div>
+</div>
+
+    <div class="comment_item" id="comment_2687079">
+
+    <span class="parent_id" data-parent_id="0"></span>
+    <div class="comment_body ">
+        <div class="info  " rel="2687079">
+            <div class="folding-dot-holder"><div class="folding-dot"></div></div>
+            <div id="voting_2687079" class="voting   ">
+                <span class="minus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <span class="plus" title="Голосовать могут только зарегистрированные пользователи"></span>
+                <div class="mark positive ">
+                    <span class="score" title="Всего 1: ↑1 и ↓0">+1</span>
+                </div>
+            </div>
+            <a href="http://habrahabr.ru/users/ArtyV/" class="avatar"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/ac707ef0476d721b53b3e7c6403683ba_small.jpg" alt=""></a>
+            <a href="http://habrahabr.ru/users/ArtyV/" class="username">ArtyV</a>
+            <time>31 марта 2010 в 08:31</time>
+
+            <a href="#comment_2687079" class="link_to_comment">#</a>
+            
+            <span class="to_chidren"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="message html_format ">
+            Если пытаться запустить AP на попсовом чипсете RT61 (стоит в
+ D-Link DWA-510 например), то нужно компилить и ставить compat-wireless,
+ в убунту достаточно поставить <a href="http://linuxwireless.org/en/users/Download#Getting_compat-wireless_on_Ubuntu">backports</a>
+        </div>
+        <div class="reply_form_placeholder"></div>
+        <div class="reply">
+            
+        </div>
+    </div>
+
+    <div class="reply_comments" id="reply_comments_2687079">
+    </div>
+</div>
+
+</div>
+
+  					<p class="for_users_only_msg">Только зарегистрированные пользователи могут оставлять комментарии. <a href="https://habrahabr.ru/auth/login/">Войдите</a>, пожалуйста.</p>
+
+
+  	
+<form action="/json/favorites/" method="post" id="edit_tags_form" class="hidden">
+  <input name="action" value="add" type="hidden">
+  <input name="ti" value="0" type="hidden">
+  <input name="tt" value="0" type="hidden">
+  <label>Пометьте топик понятными вам метками, если хотите</label>
+  <input autocomplete="off" name="tags_string" class="tags_string" type="text">
+  <div class="description">Метки лучше разделять запятой. Например: <i>общение, социальные сети, myspace.com, подростки, мердок</i></div>
+  <input value="Сохранить" class="submit" type="submit"> или <a href="#" class="close" onclick="return close_edit_tags()">закрыть</a>
+</form>
+    
+    
+
+  </div>
+  <div class="sidebar_right">
+  			<div class="banner_300x500">
+		<div style="width: 300px; height: 500px; text-align: center; margin: 0px auto;" title="" id="adriver_banner_1863387959"><a href="http://ad.adriver.ru/cgi-bin/click.cgi?sid=176776&amp;ad=500505&amp;bid=3653078&amp;bt=52&amp;bn=1&amp;pz=0&amp;xpid=C9SMF79wwSf3BLVt-KY5thw9eUUOFowWc&amp;ref=http:%2f%2fhabrahabr.ru%2fpost%2f89420%2f&amp;custom=1%3Dlinux%3B4%3D4&amp;rleurl=" onclick="adriver('adriver_banner_1863387959').sendPixel('');" target="_blank"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/bn1-canon-7.png" alt="AdRiver" border="0"></a></div>
+		<script type="text/javascript">
+            function show_bn1_block(name, url){
+                console.log('show' + name);
+                if( typeof(name) !== 'undefined'){
+                    $.get('/html/'+name+'/1419945689/', function(html){
+                        $('#adriver_banner_1863387959').html(html);
+                        if( typeof(url) !== 'undefined'){
+                            $('.'+name+'_inner_banner .block_url').attr('href', url);
+                        }
+                    })
+                }
+            }
+
+
+
+			$(function(){
+
+                // конвертирут кириллицу в cp1251
+                // doc: http://www.adriver.ru/doc/edu-n/pub/settargt/standtrgt/scentrgt/scentrgt.html#9
+				function esc(s){
+                    for(var i=0,l=s.length,r='';i<l;i++){
+                        var c = s.charCodeAt(i);r += String.fromCharCode(c>1039&&c<1104 ? c-848 : c==1105 ? 184 : c==1025 ? 168 : c);
+                    }
+                    return r;
+                }
+
+                var keyword = '';
+
+                if (typeof crtg_content !== 'undefined' && crtg_content) { keyword = crtg_content; }
+                
+                
+
+				var custom = {4:ar_duo1};
+					custom[1] = 'linux';
+
+                 new adriver("adriver_banner_1863387959", {sid: 176776, bt: 52, bn: 1, custom: custom, keyword: keyword});
+			}());
+
+
+
+            
+		</script>
+	</div>
+
+  		
+  		
+<div class="block daily_best_posts">
+  <div class="title">Популярное за сутки</div>
+  <div class="posts_list">
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/company/ua-hosting/blog/247471/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Сообщения в глубине: удивительная история подводного Интернета</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247493/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">01 Ссылки для UX-специалистов</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247475/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Интерактивные карты кибератак в реальном времени</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247405/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Подходы к созданию скриптового языка описания настольных игр</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247487/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Зачем vi-топор программисту 21-го века</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/company/pt/blog/247355/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Прокачай SNMP на устройствах Huawei и H3C</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247481/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Год npm в цифрах: 2014</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/company/luxoft/blog/247491/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Делаем отгружаемые сборки: взаимодействуем между доменами без маршаллинга</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247457/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">BPMN: Моделирование физических событий</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247489/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">Первый опыт разработки iOS-приложения и размышления о маркетинге и рекламе</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247477/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">QQuickRenderControl, или как подружить QML с чужим OpenGL контекстом. Часть I</a>
+      </div>
+      <div class="post_item">
+        
+				
+				
+				
+				
+				
+
+        <a href="http://habrahabr.ru/post/247473/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'daily_best_posts', $(this).parents('.daily_best_posts').hasClass('float_block') ? 'float' : 'common'); }" class="post_name">JSON, который можно комментировать</a>
+      </div>
+  </div>
+  <div class="all"><a href="http://habrahabr.ru/top/">все лучшие</a></div>
+</div>
+
+	    
+
+<div class="block geektimes_top">
+	<a href="http://geektimes.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo" class="title">Лучшее на Geektimes</a>
+	<div class="posts_list">
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/243995/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Сообщения в глубине: удивительная история подводного Интернета</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/244017/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Британское министерство работает при помощи операционки 40-летней давности</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/244015/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Новая версия «Linux-винтовки» точно стреляет на 1,6 км</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/244013/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Дистрибутив операционной системы Северной Кореи Red Star 3.0 можно скачать в Сети</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/243993/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">125 лет назад родился Карел Чапек</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/244019/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Имплантат способен восстановить функции повреждённого спинного мозга</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/243985/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Интересные устройства с CES 2015 за 8-е января</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/243989/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Распродажа SSD Crucial M550 128 GB на Amazon.com</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/243991/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">КиберСказка: желтый сфероид</a>
+  		</div>
+  		<div class="post_item">
+  			<a class="post_name" href="http://geektimes.ru/post/244007/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">В Mozilla работают над версией Firefox OS для носимых устройств</a>
+  		</div>
+
+	</div>
+	<div class="all"><a href="http://geektimes.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">все посты</a></div>
+</div>
+
+
+  	  
+<div class="block similar_questions">
+	<div class="title">Вопросы по теме</div>
+
+	<div class="posts_list">
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/154025?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Вдруг не с того ничего падает сеть на ноутбуке [скриншоты в описании]. Почему так происходит, как и чем наладить?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/145540?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Почему не работает wifi в lubuntu 14.10 после установки ?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/142373?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как сделать Wi-Fi Hot Spot с авторизацией через CMC?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/119845?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как сделать wi fi в Ubuntu 14.04?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/113257?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Hotspot в linux(ubuntu)?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/100703?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как создать точку доступа Wi-Fi с получением трафика от другого Wi-Fi?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/98733?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как сделать подключение по wi-fi к ноутбуку с Ubuntu 14.04?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/57736?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Какую
+ выбрать pci-e карточку половинного размера Wi-Fi b/g/n и Bluetooth 4.0,
+ работающую под большинством актуальных дистрибутивов Линукса?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/17968?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Проблема с wifi на ubuntu 12.04, intel centrino 130n</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/171975?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как восстановить стандартное окружение Ubuntu?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/171949?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Cocos2d-x проект скомпилированный под Linux - как убрать зависимости?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/171807?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Необходимо за короткий срок полностью овладеть Ubuntu GNU/Linux, как?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/171425?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Пальцеориентированный линукс существует ли?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/171303?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Удаленое управление компьютером. Что почитать?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/170861?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Возможно ли заблокировать ip адрес на один нужный порт в ubuntu?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/170783?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как восстановить загрузчик windows 7 после установки Ubuntu?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/170655?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Почему не работает php на web-server в Ubuntu?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/170599?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Лазерный принтер для беспроблемной работы в Линуксе?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/170485?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как запускать приложение в отдельном виртуальном рабочем пространстве?</a>
+		</div>
+    	<div class="post_item">
+    	    <a class="post_name" href="http://toster.ru/q/170169?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Как исправить ошибку NetworkManager:2504 в Ubuntu?</a>
+		</div>
+  </div>			
+		
+</div>
+
+  		
+  		
+
+	<div class="block live_broadcast">
+		<div class="title">Что обсуждают? </div>
+
+		<div class="live_broadcast_activity">
+				<div class="posts_list">
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/247471#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">Сообщения в глубине: удивительная история подводного Интернета</a>&nbsp;<span class="count">46</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/247337#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">ODROID-C1 — обзор и сравнение с RPi</a>&nbsp;<span class="count">94</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/247475#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">Интерактивные карты кибератак в реальном времени</a>&nbsp;<span class="count">8</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/247473#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">JSON, который можно комментировать</a>&nbsp;<span class="count">27</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/243353#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">Авторегистрируемые в Unity репозитории на .net для EF Code first</a>&nbsp;<span class="count">11</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/247365#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">Обработка структуры по списку базовых типов</a>&nbsp;<span class="count">4</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/219099#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">Поехали!</a>&nbsp;<span class="count">95</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/245241#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">В поисках Святого Грааля бизнес-анализа</a>&nbsp;<span class="count">124</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/247465#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">imarker — коммерческая СОРМ-like веб-аналитика уже у вашего провайдера</a>&nbsp;<span class="count">123</span>
+							</div>
+							<div class="post_item">
+								<a href="http://habrahabr.ru/post/247385#comments" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'post'); }" class="post_name">Преобразование Фурье в действии: точное определение частоты сигнала и выделение нот</a>&nbsp;<span class="count">43</span>
+							</div>
+				</div>
+				<div class="all"><a href="http://habrahabr.ru/posts/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'live_broadcast_activity', 'all_posts'); }">все публикации</a></div>
+		</div>
+
+	</div>
+  
+  		<!--  AdRiver code START. Type:AjaxJS Site: habrahabr PZ: 0 BN: 2 -->
+
+<div style="width: 300px; height: 500px; text-align: center; margin: 0px auto;" title="" id="adriver_banner_480931290" class="adbanner"><a href="http://ad.adriver.ru/cgi-bin/click.cgi?sid=176776&amp;ad=504704&amp;bid=3687746&amp;bt=52&amp;bn=2&amp;pz=0&amp;xpid=CuPpmEccndMt_do5TGbdTZwFyvy--t3zi&amp;ref=http:%2f%2fhabrahabr.ru%2fpost%2f89420%2f&amp;custom=1%3Dlinux%3B4%3D4&amp;rleurl=" onclick="adriver('adriver_banner_480931290').sendPixel('');" target="_blank"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/bn1-bn2-testdrives-4.png" alt="AdRiver" border="0"></a></div>
+
+
+<script type="text/javascript">
+    function show_bn2_block(name, url){
+        if( typeof(name) !== 'undefined'){
+            $.get('/html/'+name+'/1419945689/', function(html){
+                $('#adriver_banner_480931290').html(html);
+                if( typeof(url) !== 'undefined'){
+                    $('.'+name+'_inner_banner .block_url').attr('href', url);
+                }
+            })
+        }
+    }
+
+    $(function(){
+
+        var check_scroll_position = function() {
+            var height = $(window).height();
+            var scrollTop = $(window).scrollTop();
+            var scrollBottom = $(window).scrollTop() + height;
+            var blockTop = $('#adriver_banner_480931290').position().top;
+            var show = scrollTop < blockTop && blockTop < scrollBottom;
+            if( show ){
+                $( window ).off('scroll', check_scroll_position);
+                $( window ).trigger('show_bn2');
+            }
+        };
+        $( window ).on('scroll', check_scroll_position);
+
+        $( window ).on('show_bn2', function(){
+            var keyword = '';
+            if (typeof crtg_content !== 'undefined' && crtg_content) { keyword = crtg_content; }
+            var custom = {4:ar_duo1};
+            custom[1] = 'linux';
+            new adriver("adriver_banner_480931290", {sid: 176776, bt: 52, bn: 2, custom: custom, keyword: keyword});
+        });
+    });
+    </script>
+<!--  AdRiver code END  -->
+
+  		
+<div class="block best_company">
+
+		<div class="title">Компания дня <img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/bg_cicle_help.png" class="help-tip"></div>
+
+		<div class="company_info">
+			<div class="name">
+			 <img class="favicon" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/41b9a050e83c0d6549577b107ba1a216_small.png" alt="Web-payment.ru" height="16" width="16">
+			 <div class="company_name"><a href="http://habrahabr.ru/company/web_payment_ru/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'best_company', 'title'); }" class="title">Web-payment.ru</a></div>
+			</div>
+
+			<p>Последняя публикация:
+				<a href="http://habrahabr.ru/company/web_payment_ru/blog/247295/" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'best_company', 'post'); }">Итоги года. Анализ того, что было на рынке платежных систем и прогноз на будущее</a>
+			</p>
+
+			<div class="buttons">
+  			<div id="fans_count">127 подписчиков</div>
+			</div>
+		</div>
+
+	</div>
+
+
+  		
+  		
+  		
+  </div>
+  <div class="clear"></div>
+
+  <script>
+    // hubs to GA
+      ga('send', 'event', 'Post_view', 'linux (Настройка Linux)',  window.location.pathname + window.location.search);
+  </script>
+
+
+
+        
+        	
+	<div class="rotated_posts">
+			<div class="rotated_post ">
+				<a href="http://habrahabr.ru/company/croc/blog/241305/" class="grey" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'posts_rotation_block'); }">Как мы озвучивали стадион «Спартака»</a>
+			</div>
+			<div class="rotated_post ">
+				<a href="http://habrahabr.ru/company/madrobots/blog/239049/" class="grey" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'posts_rotation_block'); }">Как мы открывали магазин в ТЦ МЕГА: история ошибок</a>
+			</div>
+			<div class="rotated_post last">
+				<a href="http://habrahabr.ru/post/237469/" class="grey" onclick="if (typeof ga === 'function') { ga('send', 'event', 'tm_block', 'posts_rotation_block'); }">Меня попросили взломать программу на собеседовании</a>
+			</div>
+		<div class="clear"></div>
+	</div>
+
+        <div class="bottom_promo_blocks">
+    <div class="left">
+            
+	<div class="block new_vacanies">
+  <a href="http://brainstorage.me/jobs?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo" class="title">Brainstorage</a>
+  <div class="vacancies">
+		<div class="job_item ">
+			<a href="http://brainstorage.me/jobs/25795?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Ведущий бэкэнд разработчик</a>
+		</div>
+		<div class="job_item ">
+			<a href="http://brainstorage.me/jobs/9471?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Flash-аниматор</a>
+		</div>
+		<div class="job_item ">
+			<a href="http://brainstorage.me/jobs/9481?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Дизайнер интерфейсов</a>
+		</div>
+		<div class="job_item ">
+			<a href="http://brainstorage.me/jobs/9483?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Художник/Иллюстратор</a>
+		</div>
+		<div class="job_item ">
+			<a href="http://brainstorage.me/jobs/25773?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Программист-разработчик на веб-проект (парсер) </a>
+		</div>
+		<div class="job_item ">
+			<a href="http://brainstorage.me/jobs/25785?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Тестировщик/Специалист по технической поддержке</a>
+		</div>
+		<div class="job_item marked">
+			<a href="http://brainstorage.me/jobs/25781?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Back-end PHP разработчик</a>
+		</div>
+		<div class="job_item marked">
+			<a href="http://brainstorage.me/jobs/20179?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Разработчик Pytnon / Django</a>
+		</div>
+		<div class="job_item ">
+			<a href="http://brainstorage.me/jobs/25463?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Разработчик баннерной системы</a>
+		</div>
+		<div class="job_item marked">
+			<a href="http://brainstorage.me/jobs/21987?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Python/Django Developer</a>
+		</div>
+  </div>
+  <div class="all"><a href="http://brainstorage.me/jobs?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">все вакансии</a></div>
+</div>
+
+    </div>
+    <div class="right">
+        
+	<div class="block freelansim">
+	  <a href="http://freelansim.ru/?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo" class="title"></a>
+	  <div class="tasks">
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96767?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Реализовать приложение по управлению играми в Dota 2</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96765?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Верстка сайта Конференции АКР</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96763?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Требуются люди со своим интернет-магазином для тестов</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96755?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Восстановление позиций сайта</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96753?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Убрать тормоза на Wordpress</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96745?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">PHP-скрипт отправки сообщений в Whatsapp</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96697?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Медийный план (Internet + TV + пресса) небольшой сети фитнес-центров</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96663?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Дизайн логотипа</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/96465?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Разработка картографического сервиса</a>
+				</div>
+				<div class="task ">
+					<a href="http://freelansim.ru/tasks/14152?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">Создание 2D игры (flash, под ключ)</a>
+				</div>
+
+	  </div>
+	  <div class="all"><a href="http://freelansim.ru/tasks?utm_source=tm_habrahabr&amp;utm_medium=tm_block&amp;utm_campaign=tm_promo">все заказы</a></div>
+	</div>
+
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+        
+        <div class="clear"></div>
+
+        <div class="footer_panel">
+          <div id="footer">
+	<dl>
+		<dd><a href="https://habrahabr.ru/auth/login/">Войти</a></dd>
+		<dd><a href="https://habrahabr.ru/auth/register/">Регистрация</a></dd>
+	</dl>
+	<dl>
+		<dt>Разделы</dt>
+		<dd><a href="http://habrahabr.ru/posts/top/">Публикации</a></dd>
+		<dd><a href="http://habrahabr.ru/hubs/">Хабы</a></dd>
+		<dd><a href="http://habrahabr.ru/companies/">Компании</a></dd>
+		<dd><a href="http://habrahabr.ru/users/">Пользователи</a></dd>
+		<dd><a href="http://toster.ru/?_aa=press_anykey">Q&amp;A</a></dd>
+		<dd><a href="http://habrahabr.ru/sandbox/">Песочница</a></dd>
+		
+	</dl>	
+	<dl>
+		<dt>Инфо</dt>
+		<dd><a href="http://habrahabr.ru/info/about/">О сайте</a></dd>
+		<dd><a href="http://habrahabr.ru/info/help/rules/">Правила</a></dd>
+		<dd><a href="http://habrahabr.ru/info/help/">Помощь</a></dd>
+		<dd><a href="http://habrahabr.ru/info/agreement/">Соглашение</a></dd>
+	</dl>
+	<dl>
+		<dt>Услуги</dt>
+		<dd><a href="http://habrahabr.ru/info/advertising/">Реклама</a></dd>
+		<dd><a href="http://habrahabr.ru/info/advertising/corporate/">Тарифы</a></dd>
+		<dd><a href="http://habrahabr.ru/info/advertising/workshops/">Семинары</a></dd>
+		<dd><a href="http://special.habrahabr.ru/">Спецпроекты</a></dd>
+	</dl>
+	<dl>
+		<dt>Разное</dt>
+		<dd><a href="http://habrahabr.ru/apps/">Приложения</a></dd>
+		<dd><a href="http://habrahabr.ru/special/testdrive/">Тест-драйвы</a></dd>
+		<dd><a href="http://special.habrahabr.ru/hello_startup/bizspark/">Помощь стартапам</a></dd>
+	</dl>
+	<div class="copyright">
+
+		<div class="about">
+			<a href="http://tmtm.ru/">TM</a>
+			© 2006–2015
+			<br><br>
+			<a href="http://habrahabr.ru/feedback/">Служба поддержки</a><br><br>
+                <a href="http://m.habrahabr.ru/post/89420/?mobile=yes">Мобильная версия</a><br><br>
+			
+
+			<div class="social_accounts">
+				<a href="https://twitter.com/habrahabr" class="tw"></a>
+				<a href="https://www.facebook.com/habrahabr.ru" class="fb"></a>
+				<a href="http://vk.com/habr" class="vk"></a>
+				<!-- <a href="" class="gp"></a> //-->
+			</div>
+
+		</div>
+	</div>
+
+</div>    
+          
+        </div>
+      </div>
+    </div>
+  
+
+      <script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/jquery.js"></script>
+      <script type="text/javascript">
+        $(document).ready( function(){
+          window.tmidLogin = function(){ return false; };
+          if( $.cookie('tmid_no_check') == undefined ) {
+            var expire = new Date();
+            expire.setMinutes(expire.getMinutes() + 10 );
+            $.cookie('tmid_no_check', 1, { expires: expire } );
+            $.getScript("https://id.tmtm.ru/checklogin", function(){
+              if( window.tmidLogin() ) {
+
+                  var href = $('#login').attr('href');
+
+                  if( href !== undefined ) {
+                      window.location.href = href;
+                  }
+              }
+            });
+          }
+        });
+      </script>
+
+    <script type="text/javascript">
+  // global vars
+  var g_base_url = 'habrahabr.ru';
+  var g_show_xpanel = false;
+  var g_base_fullurl = 'http://habrahabr.ru/';
+  var g_is_guest = false;
+</script> 
+
+      <script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/shortcuts.js"></script>
+    
+    <script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/global_footer_main.js"></script>
+
+    	<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/a"></script>
+
+    
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter24049213 = new Ya.Metrika({id:24049213,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+    
+
+    <!-- Хабр не резиновый! -->
+  
+
+<div id="tiptip_holder" style="max-width:auto;"><div id="tiptip_arrow"><div id="tiptip_arrow_inner"></div></div><div id="tiptip_content"></div></div><div id="AutocompleteContainter_fdda7" style="position: absolute; z-index: 9999; top: 2px; left: 0px;"><div class="autocomplete-w1"><div class="autocomplete" id="Autocomplete_fdda7" style="display: none; width: 300px; max-height: 400px;"></div></div></div><div id="AutocompleteContainter_2358a" style="position: absolute; z-index: 9999; top: 2px; left: 0px;"><div class="autocomplete-w1"><div class="autocomplete" id="Autocomplete_2358a" style="display: none; width: 300px; max-height: 400px;"></div></div></div><iframe style="width: 10px; height: 10px; position: absolute; top: -10000px; left: -10000px;" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/2.html"></iframe><iframe style="width: 10px; height: 10px; position: absolute; top: -10000px; left: -10000px;" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/2_002.html"></iframe><iframe style="width: 10px; height: 10px; position: absolute; top: -10000px; left: -10000px;" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Wifi%20AP%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20Ubuntu%20_%20%D0%A5%D0%B0%D0%B1%D1%80%D0%B0%D1%85%D0%B0%D0%B1%D1%80_files/2_003.html"></iframe><div id="arFB2914788" style="width: 1px; height: 1px; overflow: hidden;"><div role="button" tabindex="0" srcattribute="about:blank" title="about:blank" style="background: url(&quot;chrome://flashblock/content/flash.png&quot;) no-repeat scroll center center transparent ! important; min-width: 32px ! important; min-height: 32px ! important; width: 240px; height: 200px; border: 1px solid rgb(223, 223, 223); cursor: pointer; overflow: hidden; display: inline-block; visibility: visible ! important; opacity: 100 ! important; box-sizing: border-box; margin-right: auto; margin-left: auto;" bgactive="url(chrome://flashblock/content/flashplay.png) no-repeat center" bginactive="url(chrome://flashblock/content/flash.png) no-repeat center"></div></div></body></html>

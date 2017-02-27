@@ -1,0 +1,34 @@
+// https://wiki.debian.org/BuildingTutorial
+
+// --------------------------------------------------------------------
+sudo apt-get install build-essential fakeroot devscripts
+
+/etc/apt/sources.list >>> deb-src.
+
+
+// --------------------------------------------------------------------
+// create working dir
+mkdir ./src/ && cd ./src/
+
+apt-get source fdupes
+cd ./fdupes/
+
+// apt provides a way of easily installing all the needed dependencies:
+sudo apt-get build-dep fdupes
+
+
+
+// Once you've downloaded these tools, you'll be ready to build the package.
+// Rebuild without changes
+// Before making any changes to the code, let's build the package as it is right now, just to make sure that it builds and it installs properly. Do:
+
+debuild -b -uc -us
+
+
+
+
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------

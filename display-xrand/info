@@ -1,0 +1,78 @@
+
+
+ch3ll0v3k@ch3ll:~/.local/share/icc$ xrandr --verbose
+or 
+ch3ll0v3k@ch3ll:~/.local/share/icc$ xrandr 
+
+Screen 0: minimum 320 x 200, current 1024 x 768, maximum 2048 x 2048
+LVDS1 connected 1024x768+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
+    1024x768       60.0*+
+    800x600        60.3     56.2  
+    640x480        59.9  
+VGA1 disconnected (normal left inverted right x axis y axis)
+
+xrandr --output LVDS1 --gamma 0.85:0.85:0.85
+
+xrandr --output LVDS1 --brightness 1.2
+
+// --------------------------------------------------------------------
+// https://pkg-xorg.alioth.debian.org/howto/use-xrandr.html
+
+// query all outputs and enable them with their default mode:
+$ xrandr --auto
+
+// disable one output using:
+$ xrandr --output LVDS1 --off
+
+// change the LVDS1 mode to 1024x768 using:
+$ xrandr --output LVDS1 --mode 1024x768
+$ xrandr --output LVDS1 --mode 1024x768 --rate 75
+$ xrandr --output LVDS1 --rate 75
+
+
+// default mode:
+$ xrandr --output LVDS1 --auto
+
+// --------------------------------------------------------------------
+
+
+Placing outputs in a virtual screen
+A bit of configuration for non-KMS setups:
+
+Let’s have a look at the maximal virtual screen size, we see 4096x4096 in this example:
+
+$ xrandr|head -1
+Screen 0: minimum 320 x 200, current 1280 x 800, maximum 4096 x 4096
+
+With KMS (FIXME: Link to a page which explains what KMS is), there’s no need to specify any Virtual option. With DRI and without KMS, that might be needed. Indeed, drivers will often create a default virtual screen with small dimensions, for instance 1600x1200, to reduce memory consumption.
+
+If you plan to use multiple outputs displaying different zones, you should configure your xorg.conf by adding a Virtual line to the Display subsection in the Screen section.
+
+Section "Screen"
+  …
+  SubSection "Display"
+    Depth 24
+    Virtual 3000 2000
+  EndSubSection
+EndSection
+
+Place outputs
+
+Outputs are placed using the following options: --right-of/--left-of/--above/--below. For instance, to place the VGA1 output virtually-right of the internal panel (LVDS1):
+
+$ xrandr --output VGA1 --right-of LVDS1
+
+Note that hardware and memory limitations may severely restrict the size of your virtual screen, see the Caveats section below.
+Adding new modes
+
+Under some circumstances, some modes might be missing. For instance, if the monitor does not report correct EDID information. Or if the output didn’t have a CRTC available at startup because another output was using it and you disabled it in the meantime.
+
+If a mode exist, you may add it to one output with:
+
+$ xrandr --addmode VGA1 800x600
+
+If the mode does not exist, you may first create it by passing a modeline:
+
+$ xrandr --newmode <ModeLine>
+
+You may create a modeline using the gtf or cvt tools (shipped in the xserver-xorg-core package).

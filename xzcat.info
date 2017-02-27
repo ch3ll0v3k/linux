@@ -1,0 +1,2 @@
+xzcat kali-$version-rpi2.img.xz | dd of=/dev/sdb bs=512k
+xzcat -d -k kali-2.1.2-rpi2.unzip.7.3GB.img.xz | dcfldd of=/dev/sdb bs=512k
